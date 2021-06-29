@@ -130,7 +130,7 @@ class DynamicDataTrainingArguments(DataTrainingArguments):
     )
 
     top_n_template: int = field(
-        default=None,
+        default=5,
         metadata={"help": "Use top-n template in the template path"}
     )
 

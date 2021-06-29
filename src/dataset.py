@@ -439,32 +439,32 @@ class FewShotDataset(torch.utils.data.Dataset):
                 self.example_idx.append((query_idx, context_indices, sample_idx))
 
         # If it is not training, we pre-process the data; otherwise, we process the data online.
-        if mode != "train":
-            self.features = []
-            _ = 0
-            for query_idx, context_indices, bootstrap_idx in self.example_idx:
-                # The input (query) example
-                example = self.query_examples[query_idx]
-                # The demonstrations
-                supports = self.select_context([self.support_examples[i] for i in context_indices])
+            if mode != "train":
+                self.features = []
+                _ = 0
+                for query_idx, context_indices, bootstrap_idx in self.example_idx:
+                    # The input (query) example
+                    example = self.query_examples[query_idx]
+                    # The demonstrations
+                    supports = self.select_context([self.support_examples[i] for i in context_indices])
 
-                if args.template_list is not None:
-                    template = args.template_list[sample_idx % len(args.template_list)] # Use template in order
-                else:
-                    template = args.template
+                    if args.template_list is not None:
+                        template = args.template_list[sample_idx % len(args.template_list)] # Use template in order
+                    else:
+                        template = args.template
 
-                self.features.append(self.convert_fn(
-                    example=example,
-                    supports=supports,
-                    use_demo=self.use_demo,
-                    label_list=self.label_list,
-                    prompt=args.prompt,
-                    template=template,
-                    label_word_list=self.label_word_list,
-                    verbose=True if _ == 0 else False,
-                ))
+                    self.features.append(self.convert_fn(
+                        example=example,
+                        supports=supports,
+                        use_demo=self.use_demo,
+                        label_list=self.label_list,
+                        prompt=args.prompt,
+                        template=template,
+                        label_word_list=self.label_word_list,
+                        verbose=True if _ == 0 else False,
+                    ))
 
-                _ += 1
+                    _ += 1
         else:
             self.features = None
 
