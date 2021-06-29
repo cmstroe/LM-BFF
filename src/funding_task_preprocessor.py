@@ -2,7 +2,7 @@ from transformers import DataProcessor, InputExample
 from src.processors import TextClassificationProcessor, processors_mapping, num_labels_mapping, output_modes_mapping, compute_metrics_mapping, text_classification_metrics
 
 
-class FundingClassification(TextClassificationProcessor):
+class FinancialsClassification(TextClassificationProcessor):
     def _create_examples(self, lines, set_type):
         """Creates examples for the training, dev and test sets."""
         examples = []
@@ -19,7 +19,7 @@ class FundingClassification(TextClassificationProcessor):
                 if not pd.isna(line[3]):
                     text += ' ' + line[3]
                 examples.append(InputExample(guid=guid, text_a=text, short_text=line[1], label=line[0])) 
-            elif self.task_name in ['mr', 'sst-5', 'subj', 'trec', 'cr', 'mpqa', 'funding']:
+            elif self.task_name in ['mr', 'sst-5', 'subj', 'trec', 'cr', 'mpqa', 'funding', 'ma', 'financials', 'partnership']:
                 examples.append(InputExample(guid=guid, text_a=line[1], label=line[0]))
             else:
                 raise Exception("Task_name not supported.")
@@ -42,12 +42,33 @@ class FundingClassification(TextClassificationProcessor):
             return list(range(2))
         elif self.task_name == "funding":
             return list(range(2))
+        elif self.task_name == "ma":
+            return list(range(2)) 
+        elif self.task_name == "partnership":
+            return list(range(2))
+        elif self.task_name == "financials":
+            return list(range(2)) 
         else:
             raise Exception("task_name not supported.")
 
 
 
-processors_mapping['funding'] = FundingClassification('funding')
+processors_mapping['funding'] = FinancialsClassification('funding')
 num_labels_mapping['funding'] = 2
 output_modes_mapping['funding'] = "classification"
 compute_metrics_mapping['funding'] = text_classification_metrics
+
+processors_mapping['financials'] = FinancialsClassification('financials')
+num_labels_mapping['financials'] = 2
+output_modes_mapping['financials'] = "classification"
+compute_metrics_mapping['financials'] = text_classification_metrics
+
+processors_mapping['ma'] = FinancialsClassification('ma')
+num_labels_mapping['ma'] = 2
+output_modes_mapping['ma'] = "classification"
+compute_metrics_mapping['ma'] = text_classification_metrics
+
+processors_mapping['partnership'] = FinancialsClassification('partnership')
+num_labels_mapping['partnership'] = 2
+output_modes_mapping['partnership'] = "classification"
+compute_metrics_mapping['partnership'] = text_classification_metrics
