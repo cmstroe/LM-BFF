@@ -1,0 +1,5 @@
+**cls**sent_0*_Does_the_previous_text_talk_about_an_investment*?*mask*sep+*
+*cls**sent_0*_Does_the_previous_text_talk_about_an_investment*?*mask*sep+*
+*cls**sent_0*_Did_the_company_get_an_investment*?*mask*sep+*
+*cls**sent_0*_Does_a_company_raise_money*?*mask*sep+*
+*cls**sent_0*_Did_an_investment_happen*?*mask*sep+*
