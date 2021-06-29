@@ -1,0 +1,7 @@
+*cls**sent_0*_Did_an_acquisition_happen*?*mask*sep+*
+*cls**sent_0*_Dis_the_company_get_acquired*?*mask*sep+*
+*cls**sent_0*_Did_a_company_acquire_another*?*mask*sep+*
+*cls**sent_0*_Was_there_a_merger_between_companies*?*mask*sep+*
+*cls**sent_0*_Did_the_companies_merge*?*mask*sep+*
+*cls**sent_0*_Was_there_a_corporate_event*?*mask*sep+*
+

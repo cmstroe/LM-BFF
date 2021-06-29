@@ -1,0 +1,11 @@
+*cls**sent_0*_Is_a_collaboration_mentioned_in_the_previous_sentence*?*mask*sep+*
+*cls**sent_0*_Are_the_companies_in_a_partnership*?*mask*sep+*
+*cls**sent_0*_Did_the_companies_start_a_new_partnership*?*mask*sep+*
+*cls**sent_0*_Are_the_companies_in_a_collaboration*?*mask*sep+*
+*cls**sent_0*_Did_the_companies_start_a_new_collaboration*?*mask*sep+*
+*cls**sent_0*_Is_a_client_of_the_company_mentioned*?*mask*sep+*
+*cls**sent_0*_Is_the_company_a_client*?*mask*sep+*
+*cls**sent_0*_Is_the_company_a_supplier*?*mask*sep+*
+
+
+
