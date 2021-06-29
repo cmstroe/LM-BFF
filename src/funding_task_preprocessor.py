@@ -1,5 +1,5 @@
 from transformers import DataProcessor, InputExample
-from preprocessors import TextClassificationProcessor, processors_mapping, num_labels_mapping, output_modes_mapping, compute_metrics_mapping
+from processors import TextClassificationProcessor, processors_mapping, num_labels_mapping, output_modes_mapping, compute_metrics_mapping
 
 
 class FundingClassification(TextClassificationProcessor):
