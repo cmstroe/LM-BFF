@@ -512,6 +512,7 @@ class FewShotDataset(torch.utils.data.Dataset):
             # The input (query) example
             example = self.query_examples[query_idx]
             # The demonstrations
+            sample_idx = i
             supports = self.select_context([self.support_examples[i] for i in context_indices])
 
             if self.args.template_list is not None:
