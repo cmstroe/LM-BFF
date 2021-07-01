@@ -93,7 +93,11 @@ case $TASK in
         MAPPING="{0:'terrible',1:'great'}"
         TASK_EXTRA="--first_sent_limit 110  --double_demo"
         ;;
-
+    partnership)
+        TEMPLATE=*cls**sent_0*_Is_a_collaboration_mentioned_in_the_previous_sentence*?*mask*sep+*
+        MAPPING="{0:'no',1:'yes'}"
+        TASK_EXTRA="--first_sent_limit 110  --double_demo"
+        ;;
 esac
 
 # Gradient accumulation steps
