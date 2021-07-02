@@ -39,7 +39,7 @@ def get_glue_label(task, line):
         raise NotImplementedError
 
 def get_labels(data_dir, k, seed, task, print_name):
-    if print_name in ['sst-5', 'mr', 'cr', 'mpqa', 'subj', 'trec']:
+    if print_name in ['sst-5', 'mr', 'cr', 'mpqa', 'subj', 'trec', 'partnership']:
         data = pd.read_csv(os.path.join(data_dir, print_name, '{}-{}'.format(k, seed), 'test.csv'), header=None).values.tolist()
         labels = np.zeros((len(data)), dtype=np.uint8)
         for i, example in enumerate(data):
@@ -163,6 +163,9 @@ def main():
         elif condition['task_name'] == 'mpqa':
             args.key = 'mpqa_dev_eval_acc'
             args.test_key = 'mpqa_test_eval_acc'
+        elif condition['task_name'] == 'partnership':
+            args.key = 'partnership_dev_eval_acc'
+            args.test_key = 'partnership_test_eval_acc'
         else:
             raise NotImplementedError
 
@@ -248,7 +251,8 @@ def main():
         'cr': 'cr',
         'mpqa': 'mpqa',
         'subj': 'subj',
-        'trec': 'trec'
+        'trec': 'trec',
+        'partnership' : 'partnership'
     }
 
     tokenizer = AutoTokenizer.from_pretrained('roberta-large')
@@ -271,7 +275,7 @@ def main():
         
         # Compute metrics
         preds = mean_logits.argmax(-1)
-        if condition['task_name'] in ['sst-5', 'mr', 'cr', 'mpqa', 'subj', 'trec']:
+        if condition['task_name'] in ['sst-5', 'mr', 'cr', 'mpqa', 'subj', 'trec','partnership']:
             metric = {"acc": simple_accuracy(preds, labels)}
         else:
             metric = glue_compute_metrics(condition['task_name'], preds, labels)
