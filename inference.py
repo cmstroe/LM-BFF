@@ -1,5 +1,6 @@
 import torch
 from src.trainer import Trainer
+from dataclasses import dataclass, field
 from tools.generate_labels import ModelArguments, DynamicDataTrainingArguments, TrainingArguments
 from src.models import BertForPromptFinetuning, RobertaForPromptFinetuning, resize_token_type_embeddings
 from transformers import RobertaConfig
