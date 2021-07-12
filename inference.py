@@ -282,7 +282,7 @@ def main():
             model=model_fn,
             args=training_args,
             train_dataset=None,
-            eval_dataset="inference_data.csv",
+            eval_dataset=None,
         )
 
 
