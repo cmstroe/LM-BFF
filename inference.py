@@ -9,6 +9,7 @@ import dataclasses
 import logging
 import os
 import sys
+import pandas as pd
 from dataclasses import dataclass, field
 from typing import Callable, Dict, Optional
 import torch
@@ -284,7 +285,6 @@ def main():
             train_dataset=None,
             eval_dataset=None,
         )
-
 
     # print(trainer.predict("inference_data.csv"))
     if training_args.do_predict:
