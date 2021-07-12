@@ -285,6 +285,6 @@ def main():
             train_dataset=None,
             eval_dataset="inference_data.csv",
         )
-    trainer.predict("inference_data.csv")
+    print(trainer.predict("inference_data.csv"))
 
-    dataset = FewShotDataset(data_args, tokenizer=tokenizer, mode="test", use_demo=True)
+    # dataset = FewShotDataset(data_args, tokenizer=tokenizer, mode="test", use_demo=True)
