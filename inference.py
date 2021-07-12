@@ -293,7 +293,7 @@ def main():
        
         for test_dataset in test_datasets:
             trainer.compute_metrics = build_compute_metrics_fn(test_dataset.args.task_name)
-            output = trainer.evaluate(eval_dataset="inference_data.csv")
+            output = trainer.evaluate(eval_dataset=test_dataset)
             test_result = output.metrics
 
             output_test_file = os.path.join(
