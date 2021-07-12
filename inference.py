@@ -2,6 +2,7 @@ import torch
 from src.trainer import Trainer
 from dataclasses import dataclass, field
 from tools.generate_labels import ModelArguments, DynamicDataTrainingArguments, TrainingArguments
+from transformers import GlueDataTrainingArguments as DataTrainingArguments
 from src.models import BertForPromptFinetuning, RobertaForPromptFinetuning, resize_token_type_embeddings
 from transformers import RobertaConfig, AutoConfig, AutoModelForSequenceClassification, AutoTokenizer, EvalPrediction
 from transformers import HfArgumentParser, TrainingArguments
@@ -311,9 +312,9 @@ def main():
     # print(trainer.predict("inference_data.csv"))
     if training_args.do_predict:
         logging.info("*** Test ***")
-        dataset = FewShotDataset(data_args, tokenizer=tokenizer, mode="test", use_demo=True)
+        test_dataset = FewShotDataset(data_args, tokenizer=tokenizer, mode="test", use_demo=True)
 
-        test_datasets = test_dataset.values.tolist()
+        test_datasets = [test_dataset]
        
         for test_dataset in test_datasets:
             trainer.compute_metrics = build_compute_metrics_fn(test_dataset.args.task_name)
