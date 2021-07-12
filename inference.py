@@ -332,11 +332,11 @@ def main():
                         writer.write("%s = %s\n" % (key, value))
                         final_result[test_dataset.args.task_name + '_test_' + key] = value
 
-                if training_args.save_logit:
-                    predictions = output.predictions
-                    num_logits = predictions.shape[-1]
-                    logits = predictions.reshape([test_dataset.num_sample, -1, num_logits]).mean(axis=0)
-                    np.save(os.path.join(training_args.save_logit_dir, "{}-{}-{}.npy".format(test_dataset.task_name, training_args.model_id, training_args.array_id)), logits)
+  
+                predictions = output.predictions
+                num_logits = predictions.shape[-1]
+                logits = predictions.reshape([test_dataset.num_sample, -1, num_logits]).mean(axis=0)
+                np.save(os.path.join(training_args.save_logit_dir, "{}-{}-{}.npy".format(test_dataset.task_name, training_args.model_id, training_args.array_id)), logits)
 
             test_results.update(test_result)
 
