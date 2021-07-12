@@ -3,7 +3,7 @@ from src.trainer import Trainer
 from dataclasses import dataclass, field
 from tools.generate_labels import ModelArguments, DynamicDataTrainingArguments, TrainingArguments
 from src.models import BertForPromptFinetuning, RobertaForPromptFinetuning, resize_token_type_embeddings
-from transformers import RobertaConfig
+from transformers import RobertaConfig, AutoConfig, AutoModelForSequenceClassification, AutoTokenizer, EvalPrediction
 from transformers import HfArgumentParser, TrainingArguments
 import dataclasses
 import logging
@@ -16,10 +16,6 @@ import torch
 
 import numpy as np
 
-import transformers
-from transformers import AutoConfig, AutoModelForSequenceClassification, AutoTokenizer, EvalPrediction
-from transformers import GlueDataTrainingArguments as DataTrainingArguments
-from transformers import HfArgumentParser, TrainingArguments, set_seed
 
 from src.dataset import FewShotDataset
 from src.models import BertForPromptFinetuning, RobertaForPromptFinetuning, resize_token_type_embeddings
@@ -265,6 +261,32 @@ class DynamicTrainingArguments(TrainingArguments):
 
 
 def main():
+    def build_compute_metrics_fn(task_name: str) -> Callable[[EvalPrediction], Dict]:
+        def compute_metrics_fn(p: EvalPrediction):
+            # Note: the eval dataloader is sequential, so the examples are in order.
+            # We average the logits over each sample for using demonstrations.
+            predictions = p.predictions
+            num_logits = predictions.shape[-1]
+            logits = predictions.reshape([eval_dataset.num_sample, -1, num_logits])
+            logits = logits.mean(axis=0)
+            
+            if num_logits == 1:
+                preds = np.squeeze(logits)
+            else:
+                preds = np.argmax(logits, axis=1)
+
+            # Just for sanity, assert label ids are the same.
+            label_ids = p.label_ids.reshape([eval_dataset.num_sample, -1])
+            label_ids_avg = label_ids.mean(axis=0)
+            label_ids_avg = label_ids_avg.astype(p.label_ids.dtype)
+            assert (label_ids_avg - label_ids[0]).mean() < 1e-2
+            label_ids = label_ids[0]
+
+            return compute_metrics_mapping[task_name](task_name, preds, label_ids)
+
+        return compute_metrics_fn
+    
+
     parser = HfArgumentParser((ModelArguments, DynamicDataTrainingArguments, DynamicTrainingArguments))
     model_args, data_args, training_args = parser.parse_args_into_dataclasses()
 
@@ -289,7 +311,7 @@ def main():
     # print(trainer.predict("inference_data.csv"))
     if training_args.do_predict:
         logging.info("*** Test ***")
-        test_dataset = pd.read_csv("inference_data.csv")
+        dataset = FewShotDataset(data_args, tokenizer=tokenizer, mode="test", use_demo=True)
 
         test_datasets = test_dataset.values.tolist()
        
