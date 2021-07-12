@@ -10,11 +10,11 @@ model_fn.from_pretrained('roberta-large', config = RobertaConfig.from_json_file(
 
 special_tokens = []
 
-tokenizer = AutoTokenizer.from_pretrained(
-        model_args.tokenizer_name if model_args.tokenizer_name else model_args.model_name_or_path,
-        additional_special_tokens=special_tokens,
-        cache_dir= ".",
-    )
+# tokenizer = AutoTokenizer.from_pretrained(
+#         model_args.tokenizer_name if model_args.tokenizer_name else model_args.model_name_or_path,
+#         additional_special_tokens=special_tokens,
+#         cache_dir= ".",
+    # )
 
 # parser = HfArgumentParser((ModelArguments, DynamicDataTrainingArguments, TrainingArguments))
 
