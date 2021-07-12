@@ -18,12 +18,12 @@ special_tokens = []
 
 # parser = HfArgumentParser((ModelArguments, DynamicDataTrainingArguments, TrainingArguments))
 
-trainer = Trainer(
-        model=model_fn,
-        args=training_args,
-        train_dataset=None,
-        eval_dataset=None,
-    )
+# trainer = Trainer(
+#         model=model_fn,
+#         args=training_args,
+#         train_dataset=None,
+#         eval_dataset=None,
+#     )
 model_fn.predict("inference_data.csv")
 # model_args, data_args, training_args = parser.parse_args_into_dataclasses()
 
