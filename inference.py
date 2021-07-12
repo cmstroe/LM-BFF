@@ -1,9 +1,7 @@
 import torch
-from src.trainer import Trainer
 from dataclasses import dataclass, field
 from tools.generate_labels import ModelArguments, DynamicDataTrainingArguments, TrainingArguments
 from transformers import GlueDataTrainingArguments as DataTrainingArguments
-from src.models import BertForPromptFinetuning, RobertaForPromptFinetuning, resize_token_type_embeddings
 from transformers import RobertaConfig, AutoConfig, AutoModelForSequenceClassification, AutoTokenizer, EvalPrediction
 from transformers import HfArgumentParser, TrainingArguments
 import dataclasses
@@ -293,7 +291,7 @@ def main():
 
     model_fn = RobertaForPromptFinetuning
     model_fn = model_fn.from_pretrained('roberta-large', config = RobertaConfig.from_json_file("result/partnership-prompt-demo-16-13-roberta-large-27549/config.json") , state_dict = torch.load("result/partnership-prompt-demo-16-13-roberta-large-27549/pytorch_model.bin"))
-
+    model.label_word_list = ['yes', 'no']
     special_tokens = []
 
     tokenizer = AutoTokenizer.from_pretrained(
@@ -309,7 +307,7 @@ def main():
             eval_dataset=None,
         )
 
-    # print(trainer.predict("inference_data.csv"))
+
     if training_args.do_predict:
         logging.info("*** Test ***")
         test_dataset = FewShotDataset(data_args, tokenizer=tokenizer, mode="test", use_demo=True)
@@ -318,23 +316,11 @@ def main():
        
         for test_dataset in test_datasets:
             trainer.compute_metrics = build_compute_metrics_fn(test_dataset.args.task_name)
-            print(trainer.compute_metrics)
-            print(trainer.predict(test_dataset))
-            # output = trainer.evaluate(eval_dataset=test_dataset)
-            # test_result = output.metrics
+        
+            output = trainer.evaluate(eval_dataset=test_dataset)
+            test_result = output.metrics
 
-            # output_test_file = os.path.join(
-            #     training_args.output_dir, f"test_results_{test_dataset.args.task_name}.txt"
-            
             if trainer.is_world_master():
-                with open(output_test_file, "w") as writer:
-                    logger.info("***** Test results {} *****".format(test_dataset.args.task_name))
-                    for key, value in test_result.items():
-                        logger.info("  %s = %s", key, value)
-                        writer.write("%s = %s\n" % (key, value))
-                        final_result[test_dataset.args.task_name + '_test_' + key] = value
-
-  
                 predictions = output.predictions
                 num_logits = predictions.shape[-1]
                 logits = predictions.reshape([test_dataset.num_sample, -1, num_logits]).mean(axis=0)
@@ -342,7 +328,6 @@ def main():
 
             test_results.update(test_result)
 
-    # dataset = FewShotDataset(data_args, tokenizer=tokenizer, mode="test", use_demo=True)
-
+  
 if __name__ == "__main__":
     main()
