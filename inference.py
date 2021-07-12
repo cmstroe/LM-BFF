@@ -286,7 +286,7 @@ def main():
         )
 
 
-    print(trainer.predict("inference_data.csv"))
+    # print(trainer.predict("inference_data.csv"))
     if training_args.do_predict:
         logging.info("*** Test ***")
         test_datasets = [test_dataset]
