@@ -325,7 +325,7 @@ def main():
 
             # output_test_file = os.path.join(
             #     training_args.output_dir, f"test_results_{test_dataset.args.task_name}.txt"
-            )
+            
             if trainer.is_world_master():
                 with open(output_test_file, "w") as writer:
                     logger.info("***** Test results {} *****".format(test_dataset.args.task_name))
