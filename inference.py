@@ -24,7 +24,7 @@ trainer = Trainer(
         train_dataset=None,
         eval_dataset=None,
     )
-model_fn.predict("inference_data.csv")
+trainer.predict("inference_data.csv")
 # model_args, data_args, training_args = parser.parse_args_into_dataclasses()
 
 # dataset = FewShotDataset(data_args, tokenizer=tokenizer, mode="test", use_demo=True)
