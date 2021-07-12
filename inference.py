@@ -289,9 +289,13 @@ def main():
     parser = HfArgumentParser((ModelArguments, DynamicDataTrainingArguments, DynamicTrainingArguments))
     model_args, data_args, training_args = parser.parse_args_into_dataclasses()
 
+    train_dataset = (
+        FewShotDataset(data_args, tokenizer=tokenizer, mode="train", use_demo=("demo" in model_args.few_shot_type))
+    )
+
     model_fn = RobertaForPromptFinetuning
     model_fn = model_fn.from_pretrained('roberta-large', config = RobertaConfig.from_json_file("result/partnership-prompt-demo-16-13-roberta-large-27549/config.json") , state_dict = torch.load("result/partnership-prompt-demo-16-13-roberta-large-27549/pytorch_model.bin"))
-    model_fn.label_word_list = ['yes', 'no']
+    model_fn.label_word_list = torch.tensor(train_dataset.label_word_list).long().cuda()
     special_tokens = []
 
     tokenizer = AutoTokenizer.from_pretrained(
