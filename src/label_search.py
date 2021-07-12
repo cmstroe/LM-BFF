@@ -144,5 +144,5 @@ def find_labels(
     logger.info("Automatically searched pairings:")
     for i, indices in enumerate(best_pairings):
         logger.info("\t| %s (%s = %2.2f)", " ".join([vocab[j] for j in indices]), metric, best_scores[i])
-
+    
     return best_pairings
