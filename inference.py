@@ -291,7 +291,7 @@ def main():
 
     model_fn = RobertaForPromptFinetuning
     model_fn = model_fn.from_pretrained('roberta-large', config = RobertaConfig.from_json_file("result/partnership-prompt-demo-16-13-roberta-large-27549/config.json") , state_dict = torch.load("result/partnership-prompt-demo-16-13-roberta-large-27549/pytorch_model.bin"))
-    model.label_word_list = ['yes', 'no']
+    model_fn.label_word_list = ['yes', 'no']
     special_tokens = []
 
     tokenizer = AutoTokenizer.from_pretrained(
