@@ -263,7 +263,6 @@ class DynamicTrainingArguments(TrainingArguments):
     )
 
 
-
 def main():
     parser = HfArgumentParser((ModelArguments, DynamicDataTrainingArguments, DynamicTrainingArguments))
     model_args, data_args, training_args = parser.parse_args_into_dataclasses()
@@ -290,3 +289,6 @@ def main():
     print(trainer.predict("inference_data.csv"))
 
     # dataset = FewShotDataset(data_args, tokenizer=tokenizer, mode="test", use_demo=True)
+
+if __name__ == "__main__":
+    main()
