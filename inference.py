@@ -22,7 +22,7 @@ trainer = Trainer(
         model=model_fn,
         args=None,
         train_dataset=None,
-        eval_dataset=None,
+        eval_dataset="inference_data.csv",
     )
 trainer.predict("inference_data.csv")
 # model_args, data_args, training_args = parser.parse_args_into_dataclasses()
