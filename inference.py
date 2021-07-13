@@ -305,9 +305,12 @@ def main():
             cache_dir= ".",
         )
     
-    train_dataset = (
-        FewShotDataset(data_args, tokenizer=tokenizer, mode="train", use_demo=("demo" in model_args.few_shot_type))
-    )
+    train_dataset = FewShotDataset(
+        data_args, 
+        tokenizer=tokenizer, 
+        mode="train", 
+        use_demo=("demo" in model_args.few_shot_type))
+    
 
     print(train_dataset.label_word_list)
 
@@ -321,7 +324,14 @@ def main():
             eval_dataset=None,
         )
 
-    test_dataset = FewShotDataset(data_args, tokenizer=tokenizer, mode="test", use_demo=True)
+    test_dataset = FewShotDataset(
+            data_args, 
+            tokenizer=tokenizer, 
+            mode="test", 
+            use_demo=True
+            )
+    print("#############TEST############")
+    print(test_dataset)
 
     test_datasets = [test_dataset]
        
