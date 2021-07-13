@@ -309,7 +309,7 @@ def main():
         FewShotDataset(data_args, tokenizer=tokenizer, mode="train", use_demo=("demo" in model_args.few_shot_type))
     )
 
-    print(train_dataset)
+    print(train_dataset.label_word_list)
 
     model_fn.label_word_list = torch.tensor(train_dataset.label_word_list).long().cuda()
    
