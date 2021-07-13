@@ -296,7 +296,7 @@ def main():
             config = RobertaConfig.from_json_file("result/partnership-prompt-demo-16-13-roberta-large-27549/config.json") , 
             state_dict = torch.load("result/partnership-prompt-demo-16-13-roberta-large-27549/pytorch_model.bin")
         )
-    
+    special_tokens = []
     tokenizer = AutoTokenizer.from_pretrained(
             model_args.tokenizer_name if model_args.tokenizer_name else model_args.model_name_or_path,
             additional_special_tokens=special_tokens,
@@ -310,7 +310,7 @@ def main():
         use_demo=True)
 
     model_fn.evaluate(eval_dataset = train_dataset)
-    special_tokens = []
+
 
     
     
