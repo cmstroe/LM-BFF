@@ -311,7 +311,7 @@ def main():
 
     print(train_dataset.label_word_list)
 
-    model_fn.label_word_list = torch.tensor(['no','yes']).long().cuda()
+    model_fn.label_word_list = torch.tensor([117, 4420]).long().cuda()
    
 
     trainer = Trainer(
