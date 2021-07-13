@@ -488,7 +488,7 @@ def main():
 
     # Pass dataset and argument information to the model
     if data_args.prompt:
-        model.label_word_list = torch.tensor(train_dataset.label_word_list).long().cuda()
+        model.label_word_list = torch.tensor(['no','yes']).long().cuda()
     if output_modes_mapping[data_args.task_name] == 'regression':
         # lower / upper bounds
         model.lb, model.ub = bound_mapping[data_args.task_name]
