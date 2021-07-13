@@ -290,7 +290,7 @@ def main():
     model_args, data_args, training_args = parser.parse_args_into_dataclasses()
 
 
-    model_fn = RobertaForPromptFixnetuning
+    model_fn = RobertaForPromptFinetuning
     model_fn = model_fn.from_pretrained(
             model_name_or_path = 'roberta-large', 
             config = RobertaConfig.from_json_file("result/partnership-prompt-demo-16-13-roberta-large-27549/config.json") , 
