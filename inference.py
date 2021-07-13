@@ -290,8 +290,12 @@ def main():
     model_args, data_args, training_args = parser.parse_args_into_dataclasses()
 
 
-    model_fn = RobertaForPromptFinetuning
-    model_fn = model_fn.from_pretrained('roberta-large', config = RobertaConfig.from_json_file("result/partnership-prompt-demo-16-13-roberta-large-27549/config.json") , state_dict = torch.load("result/partnership-prompt-demo-16-13-roberta-large-27549/pytorch_model.bin"))
+    model_fn = RobertaForPromptFixnetuning
+    model_fn = model_fn.from_pretrained(
+            model_name_or_path = 'roberta-large', 
+            config = RobertaConfig.from_json_file("result/partnership-prompt-demo-16-13-roberta-large-27549/config.json") , 
+            state_dict = torch.load("result/partnership-prompt-demo-16-13-roberta-large-27549/pytorch_model.bin")
+        )
 
     special_tokens = []
 
@@ -305,10 +309,10 @@ def main():
         FewShotDataset(data_args, tokenizer=tokenizer, mode="train", use_demo=("demo" in model_args.few_shot_type))
     )
 
+    print(train_dataset)
+
     model_fn.label_word_list = torch.tensor(train_dataset.label_word_list).long().cuda()
    
-
-    
 
     trainer = Trainer(
             model=model_fn,
@@ -317,14 +321,11 @@ def main():
             eval_dataset=None,
         )
 
+    test_dataset = FewShotDataset(data_args, tokenizer=tokenizer, mode="test", use_demo=True)
 
-    if training_args.do_predict:
-        logging.info("*** Test ***")
-        test_dataset = FewShotDataset(data_args, tokenizer=tokenizer, mode="test", use_demo=True)
-
-        test_datasets = [test_dataset]
+    test_datasets = [test_dataset]
        
-        for test_dataset in test_datasets:
+    for test_dataset in test_datasets:
             trainer.compute_metrics = build_compute_metrics_fn(test_dataset.args.task_name)
         
             output = trainer.evaluate(eval_dataset=test_dataset)
