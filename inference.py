@@ -309,12 +309,12 @@ def main():
         data_args, 
         tokenizer=tokenizer, 
         mode="train", 
-        use_demo=("demo" in model_args.few_shot_type))
+        use_demo=True)
     
 
     print(train_dataset.label_word_list)
 
-    model_fn.label_word_list = torch.tensor([117, 4420]).long().cuda()
+    model_fn.label_word_list = torch.tensor(train_dataset.label_word_list).long().cuda()
    
 
     trainer = Trainer(
@@ -324,12 +324,15 @@ def main():
             eval_dataset=None,
         )
 
+
     test_dataset = FewShotDataset(
             data_args, 
             tokenizer=tokenizer, 
             mode="test", 
             use_demo=True
             )
+    
+
     print("#############TEST############")
     print(test_dataset)
 
@@ -337,7 +340,7 @@ def main():
        
     for test_dataset in test_datasets:
             trainer.compute_metrics = build_compute_metrics_fn(test_dataset.args.task_name)
-        
+            print(trainer.compute_metrics)
             output = trainer.evaluate(eval_dataset=test_dataset)
             test_result = output.metrics
 
