@@ -72,14 +72,21 @@ def main():
             additional_special_tokens=special_tokens,
             cache_dir= ".",
         )
-
-    
+    print("#########DATA ARGS#############")
+    print(data_args)
     # ipdb.runcall(FewShotDataset, data_args,tokenizer, "train", True, kwargs = 'foo')
     train_dataset = FewShotDataset(
         data_args, 
         tokenizer=tokenizer, 
         mode="train", 
         use_demo=True)
+
+    test_dataset = FewShotDataset(
+            data_args, 
+            tokenizer=tokenizer, 
+            mode="test", 
+            use_demo=True
+            )
 
     print(train_dataset)
 
@@ -111,12 +118,7 @@ def main():
         )
 
 
-    test_dataset = FewShotDataset(
-            data_args, 
-            tokenizer=tokenizer, 
-            mode="test", 
-            use_demo=True
-            )
+
     
 
     print("#############TEST############")
