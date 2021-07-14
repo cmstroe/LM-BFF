@@ -57,6 +57,7 @@ def main():
         return compute_metrics_fn
     
     parser = HfArgumentParser((ModelArguments, DynamicDataTrainingArguments, DynamicTrainingArguments))
+    model_args, data_args, training_args = parser.parse_args_into_dataclasses()
 
     model_fn = RobertaForPromptFinetuning
     model_fn = model_fn.from_pretrained(
@@ -73,13 +74,15 @@ def main():
         )
     model_fn.forward()
 
-    model_args, data_args, training_args = parser.parse_args_into_dataclasses()
+    
     # ipdb.runcall(FewShotDataset, data_args,tokenizer, "train", True, kwargs = 'foo')
     train_dataset = FewShotDataset(
         data_args, 
         tokenizer=tokenizer, 
         mode="train", 
         use_demo=True)
+
+    print(train_dataset)
 
     model_fn.forward(
         input_ids = test_dataset.input_ids,
