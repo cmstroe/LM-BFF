@@ -91,7 +91,7 @@ def main():
     print(train_dataset)
 
     model_fn.forward(
-        input_ids = test_dataset.input_ids,
+        input_ids = train_dataset.input_ids,
         attention_mask = train_dataset.attention_mask,
         mask_pos = train_dataset.mask_pos,
         labels = train_dataset.labels
