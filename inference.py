@@ -31,8 +31,6 @@ from copy import deepcopy
 from tqdm import tqdm
 import json
 
-
-
 def main():
     def build_compute_metrics_fn(task_name: str) -> Callable[[EvalPrediction], Dict]:
         def compute_metrics_fn(p: EvalPrediction):
@@ -58,11 +56,9 @@ def main():
             return compute_metrics_mapping[task_name](task_name, preds, label_ids)
 
         return compute_metrics_fn
-    
-
+    ipdb.runcall(HfArgumentParser, (ModelArguments, DynamicDataTrainingArguments, DynamicTrainingArguments), kwargs = 'foo')
     parser = HfArgumentParser((ModelArguments, DynamicDataTrainingArguments, DynamicTrainingArguments))
     model_args, data_args, training_args = parser.parse_args_into_dataclasses()
-
 
     model_fn = RobertaForPromptFinetuning
     model_fn = model_fn.from_pretrained(
@@ -70,6 +66,7 @@ def main():
             config = RobertaConfig.from_json_file("result/partnership-prompt-demo-16-13-roberta-large-27549/config.json") , 
             state_dict = torch.load("result/partnership-prompt-demo-16-13-roberta-large-27549/pytorch_model.bin")
         )
+    
     special_tokens = []
     tokenizer = AutoTokenizer.from_pretrained(
             model_args.tokenizer_name if model_args.tokenizer_name else model_args.model_name_or_path,
@@ -91,9 +88,6 @@ def main():
         labels = train_dataset.labels
 
     )
-
-
-    
     
     train_dataset = FewShotDataset(
         data_args, 
