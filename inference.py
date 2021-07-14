@@ -72,7 +72,6 @@ def main():
             additional_special_tokens=special_tokens,
             cache_dir= ".",
         )
-    model_fn.forward()
 
     
     # ipdb.runcall(FewShotDataset, data_args,tokenizer, "train", True, kwargs = 'foo')
