@@ -12,6 +12,7 @@ import pandas as pd
 from dataclasses import dataclass, field
 from typing import Callable, Dict, Optional
 import torch
+import ipdb
 
 import numpy as np
 
@@ -302,14 +303,21 @@ def main():
             additional_special_tokens=special_tokens,
             cache_dir= ".",
         )
-    
+    model_fn.forward()
+    ipdb.runcall(FewShotDataset, data_args,tokenizer, "train", True, kwargs = 'foo')
     train_dataset = FewShotDataset(
         data_args, 
         tokenizer=tokenizer, 
         mode="train", 
         use_demo=True)
 
-    model_fn.evaluate(eval_dataset = train_dataset)
+    model_fn.forward(
+        input_ids = test_dataset.input_ids,
+        attention_mask = train_dataset.attention_mask,
+        mask_pos = train_dataset.mask_pos,
+        labels = train_dataset.labels
+
+    )
 
 
     
