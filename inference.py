@@ -12,7 +12,6 @@ import pandas as pd
 from dataclasses import dataclass, field
 from typing import Callable, Dict, Optional
 import torch
-import ipdb 
 
 import numpy as np
 
@@ -58,7 +57,6 @@ def main():
         return compute_metrics_fn
     
     parser = HfArgumentParser((ModelArguments, DynamicDataTrainingArguments, DynamicTrainingArguments))
-    model_args, data_args, training_args = parser.parse_args_into_dataclasses()
 
     model_fn = RobertaForPromptFinetuning
     model_fn = model_fn.from_pretrained(
@@ -74,6 +72,8 @@ def main():
             cache_dir= ".",
         )
     model_fn.forward()
+
+    model_args, data_args, training_args = parser.parse_args_into_dataclasses()
     # ipdb.runcall(FewShotDataset, data_args,tokenizer, "train", True, kwargs = 'foo')
     train_dataset = FewShotDataset(
         data_args, 
