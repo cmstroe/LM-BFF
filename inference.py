@@ -12,7 +12,6 @@ import pandas as pd
 from dataclasses import dataclass, field
 from typing import Callable, Dict, Optional
 import torch
-import ipdb
 
 import numpy as np
 
@@ -56,7 +55,7 @@ def main():
             return compute_metrics_mapping[task_name](task_name, preds, label_ids)
 
         return compute_metrics_fn
-    ipdb.runcall(HfArgumentParser, (ModelArguments, DynamicDataTrainingArguments, DynamicTrainingArguments), kwargs = 'foo')
+    
     parser = HfArgumentParser((ModelArguments, DynamicDataTrainingArguments, DynamicTrainingArguments))
     model_args, data_args, training_args = parser.parse_args_into_dataclasses()
 
