@@ -94,11 +94,9 @@ def main():
         tokenized_text = tokenizer.tokenize(text)
 
         for i in range(len(tokenized_text)):
-            if tokenized_text[i] == '_':
+            if '_' in tokenized_text[i]:
                 tokenized_text[i] = '[MASK]'
                 mask_positions.append(i)
-            else:
-                print(tokenized_text[i].encode("utf-8").decode("latin1"))
         
         print("MASK")
         print(mask_positions)
