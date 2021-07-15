@@ -86,7 +86,7 @@ def main():
         encoded_sequence = torch.FloatTensor(inputs['input_ids'])
         encoded_sequence.resize_(1,len(encoded_sequence))
 
-        padded_sequences = tokenizer(row.sentence, padding = True)
+        padded_sequences = tokenizer(text, padding = True)
         attention_mask = torch.FloatTensor(padded_sequences["attention_mask"])
         attention_mask.resize_(1,len(attention_mask))
 
