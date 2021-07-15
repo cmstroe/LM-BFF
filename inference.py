@@ -76,7 +76,7 @@ def main():
 
     df = pd.read_csv("inference_data.csv")
     device = torch.device('cuda')
-    model_fn.label_word_list = ['yes','no']
+    model_fn.label_word_list = torch.FloatTensor(['yes','no'])
     model_fn.data_args = data_args
     model_fn.model_args = model_args
     model_fn.to(device)
