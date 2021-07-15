@@ -75,7 +75,7 @@ def main():
     
     df = pd.read_csv("inference_data.csv")
 
-    for row in df.iterrows():
+    for idx, row in df.iterrows():
         text = row.sentence + "Is a collaboration mentioned in the previous sentence? _"
         inputs = tokenizer(row.sentence)
         encoded_sequence = inputs['input_ids']
