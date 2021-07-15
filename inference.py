@@ -96,13 +96,13 @@ def main():
                 tokenized_text[i] = '[MASK]'
                 mask_positions.append(i)
 
-        output = model_fn.forward(
+        output1, output2 = model_fn.forward(
             input_ids = torch.tensor(encoded_sequence).to(device).long(), 
             attention_mask = torch.tensor(attention_mask).to(device).long(),
             mask_pos = torch.tensor( torch.FloatTensor(mask_positions)).to(device).long(),
             labels = [0,1])
         
-        print(output)
+        print(output1.tolist())
 
     
     # print("#########DATA ARGS#############")
