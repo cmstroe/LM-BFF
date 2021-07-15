@@ -91,7 +91,7 @@ def main():
 
         output = model_fn.forward(
             input_ids = torch.FloatTensor(encoded_sequence), 
-            attention_mask = padded_sequences["attention_mask"],
+            attention_mask = torch.FloatTensor(padded_sequences["attention_mask"]),
             mask_pos = torch.FloatTensor(mask_positions),
             labels = ['yes', 'no'])
         
