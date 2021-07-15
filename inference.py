@@ -74,7 +74,7 @@ def main():
         )
     
     df = pd.read_csv("inference_data.csv")
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    device = torch.device('cuda')
 
     for idx, row in df.iterrows():
         text = row.sentence + "Is a collaboration mentioned in the previous sentence? _"
