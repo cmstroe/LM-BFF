@@ -110,7 +110,7 @@ def main():
             mask_pos = mask_positions.to(device).long(),
             labels = ['yes','no'])
         
-        print(output2.tolist())
+        print(output1.tolist())
 
     
     # print("#########DATA ARGS#############")
