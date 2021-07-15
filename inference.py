@@ -113,7 +113,7 @@ def main():
         
         print(logit.tolist())
 
-    
+        break
     # print("#########DATA ARGS#############")
     # print(data_args)
     # # ipdb.runcall(FewShotDataset, data_args,tokenizer, "train", True, kwargs = 'foo')
