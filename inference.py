@@ -76,7 +76,7 @@ def main():
 
     df = pd.read_csv("inference_data.csv")
     device = torch.device('cuda')
-    model_fn.label_word_list = torch.LongTensor([1,0])
+    model_fn.label_word_list = torch.LongTensor([0,1])
     model_fn.data_args = data_args
     model_fn.model_args = model_args
     model_fn.to(device)
@@ -108,7 +108,7 @@ def main():
             input_ids = encoded_sequence.to(device).long(), 
             attention_mask = attention_mask.to(device).long(),
             mask_pos = mask_positions.to(device).long(),
-            labels = torch.LongTensor([1,0]))
+            labels = torch.LongTensor([0,1]))
         
         print(output1.tolist())
 
