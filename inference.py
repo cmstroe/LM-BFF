@@ -105,7 +105,7 @@ def main():
         
 
         output1, output2 = model_fn.forward(
-            input_ids = torch.FloatTensor(tokenizer.convert_tokens_to_ids(tokenized_text)).to(device).long(), 
+            input_ids = encoded_sequence.to(device).long(), 
             attention_mask = attention_mask.to(device).long(),
             mask_pos = mask_positions.to(device).long(),
             labels = ['yes','no'])
