@@ -79,6 +79,7 @@ def main():
     model_fn.label_word_list = torch.LongTensor([0,1])
     model_fn.data_args = data_args
     model_fn.model_args = model_args
+    model_fn.return_full_softmax = True
     model_fn.to(device)
 
     for idx, row in df.iterrows():
