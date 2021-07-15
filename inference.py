@@ -98,7 +98,7 @@ def main():
                 tokenized_text[i] = '[MASK]'
                 mask_positions.append(i)
             else:
-                print(tokenized_text[i])
+                print(tokenized_text[i].encode("utf-8").decode("latin1"))
         
         print("MASK")
         print(mask_positions)
