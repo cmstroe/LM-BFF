@@ -104,9 +104,9 @@ def main():
         
 
         output1, output2 = model_fn.forward(
-            input_ids = torch.tensor(encoded_sequence).to(device).long(), 
-            attention_mask = torch.tensor(attention_mask).to(device).long(),
-            mask_pos = torch.tensor(mask_positions.to(device).long()),
+            input_ids = encoded_sequence.to(device).long(), 
+            attention_mask = attention_mask.to(device).long(),
+            mask_pos = mask_positions.to(device).long(),
             labels = ['yes','no'])
         
         print(output2.tolist())
