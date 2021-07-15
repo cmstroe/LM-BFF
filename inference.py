@@ -102,7 +102,8 @@ def main():
                 tokenized_text[i] = '[MASK]'
                 mask_positions.append(i)
         print("MASK")
-        print(mask_positions)
+        print(len(tokenized_text))
+        print(len(text))
 
         output1, output2 = model_fn.forward(
             input_ids = torch.tensor(encoded_sequence).to(device).long(), 
