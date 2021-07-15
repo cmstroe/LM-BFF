@@ -100,7 +100,8 @@ def main():
             if tokenized_text[i] == '_':
                 tokenized_text[i] = '[MASK]'
                 mask_positions.append(i)
-        
+        print("#######tokenizer########")
+        print(tokenized_text)
         print(mask_positions)
 
         output1, output2 = model_fn.forward(
