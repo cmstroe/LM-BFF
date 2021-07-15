@@ -1,3 +1,4 @@
+
 import torch
 from dataclasses import dataclass, field
 from tools.generate_labels import ModelArguments, DynamicDataTrainingArguments, TrainingArguments
@@ -101,7 +102,7 @@ def main():
                 tokenized_text[i] = '[MASK]'
                 mask_positions.append(i)
         print("#######tokenizer########")
-        print(tokenized_text)
+        print( tokenizer.tokenize(text))
         print(mask_positions)
 
         output1, output2 = model_fn.forward(
