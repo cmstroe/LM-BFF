@@ -104,13 +104,13 @@ def main():
         mask_positions.resize_(1,len(mask_positions))
         
 
-        output1 = model_fn.forward(
+        logit = model_fn.forward(
             input_ids = encoded_sequence.to(device).long(), 
             attention_mask = attention_mask.to(device).long(),
             mask_pos = mask_positions.to(device).long(),
             labels = torch.LongTensor([0,1]))
         
-        print(output1.tolist())
+        print(prediction = tf.round(tf.nn.sigmoid(logit)))
 
     
     # print("#########DATA ARGS#############")
