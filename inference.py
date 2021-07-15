@@ -104,13 +104,13 @@ def main():
         print(mask_positions)
         
 
-        output1, output2 = model_fn.forward(
+        output1 = model_fn.forward(
             input_ids = encoded_sequence.to(device).long(), 
             attention_mask = attention_mask.to(device).long(),
             mask_pos = mask_positions.to(device).long(),
             labels = ['yes','no'])
         
-        print(output1.tolist())
+        print(output1)
 
     
     # print("#########DATA ARGS#############")
