@@ -78,6 +78,8 @@ def main():
     for idx, row in df.iterrows():
         text = row.sentence + "Is a collaboration mentioned in the previous sentence? _"
         inputs = tokenizer(row.sentence)
+        for in_ids in inputs:
+	        in_ids.resize_(1,len(in_ids))
         encoded_sequence = inputs['input_ids']
         padded_sequences = tokenizer(row.sentence, padding = True)
 
