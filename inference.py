@@ -100,7 +100,7 @@ def main():
             input_ids = torch.tensor(encoded_sequence).to(device).long(), 
             attention_mask = torch.tensor(attention_mask).to(device).long(),
             mask_pos = torch.tensor( torch.FloatTensor(mask_positions)).to(device).long(),
-            labels = [0,1])
+            labels = ['yes','no'])
         
         print(output2.tolist())
 
