@@ -161,10 +161,10 @@ class RobertaForPromptFinetuning(BertPreTrainedModel):
         prediction_mask_scores = self.lm_head(sequence_mask_output)
 
         # Exit early and only return mask logits.
-        # if self.return_full_softmax:
-        if labels is not None:
-            return torch.zeros(1, out=prediction_mask_scores.new()), prediction_mask_scores
-        return prediction_mask_scores
+        if self.return_full_softmax:
+            if labels is not None:
+                return torch.zeros(1, out=prediction_mask_scores.new()), prediction_mask_scores
+            return prediction_mask_scores
 
         # Return logits for each label
         logits = []
@@ -172,24 +172,24 @@ class RobertaForPromptFinetuning(BertPreTrainedModel):
             logits.append(prediction_mask_scores[:, self.label_word_list[label_id]].unsqueeze(-1))
         logits = torch.cat(logits, -1)
 
-        # # Regression task
-        # if self.config.num_labels == 1:
-        #     logsoftmax = nn.LogSoftmax(-1)
-        #     logits = logsoftmax(logits) # Log prob of right polarity
+        # Regression task
+        if self.config.num_labels == 1:
+            logsoftmax = nn.LogSoftmax(-1)
+            logits = logsoftmax(logits) # Log prob of right polarity
 
-        # loss = None
-        # if labels is not None:
-        #     if self.num_labels == 1:
-        #         # Regression task
-        #         loss_fct = nn.KLDivLoss(log_target=True)
-        #         labels = torch.stack([1 - (labels.view(-1) - self.lb) / (self.ub - self.lb), (labels.view(-1) - self.lb) / (self.ub - self.lb)], -1)
-        #         loss = loss_fct(logits.view(-1, 2), labels)
-        #     else:
-        #         loss_fct = nn.CrossEntropyLoss()
-        #         loss = loss_fct(logits.view(-1, logits.size(-1)), labels.view(-1))
+        loss = None
+        if labels is not None:
+            if self.num_labels == 1:
+                # Regression task
+                loss_fct = nn.KLDivLoss(log_target=True)
+                labels = torch.stack([1 - (labels.view(-1) - self.lb) / (self.ub - self.lb), (labels.view(-1) - self.lb) / (self.ub - self.lb)], -1)
+                loss = loss_fct(logits.view(-1, 2), labels)
+            else:
+                loss_fct = nn.CrossEntropyLoss()
+                loss = loss_fct(logits.view(-1, logits.size(-1)), labels.view(-1))
 
-        # output = (logits,)
-        # if self.num_labels == 1:
-        #     # Regression output
-        #     output = (torch.exp(logits[..., 1].unsqueeze(-1)) * (self.ub - self.lb) + self.lb,)
-        # return ((loss,) + output) if loss is not None else output
+        output = (logits,)
+        if self.num_labels == 1:
+            # Regression output
+            output = (torch.exp(logits[..., 1].unsqueeze(-1)) * (self.ub - self.lb) + self.lb,)
+        return ((loss,) + output) if loss is not None else output
