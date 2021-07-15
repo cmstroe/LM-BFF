@@ -81,7 +81,8 @@ def main():
         
         encoded_sequence = torch.FloatTensor(inputs['input_ids'])
         for in_ids in encoded_sequence:
-	        in_ids.resize_(1,len(in_ids))
+            if in_ids.size() != [0]:
+	            in_ids.resize_(1,len(in_ids))
         padded_sequences = tokenizer(row.sentence, padding = True)
 
         mask_positions = []
