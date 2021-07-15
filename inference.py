@@ -103,9 +103,6 @@ def main():
         mask_positions = torch.FloatTensor(mask_positions)
         mask_positions.resize_(1,len(mask_positions))
         
-        print("MASK")
-        print(mask_positions)
-        
 
         output1 = model_fn.forward(
             input_ids = encoded_sequence.to(device).long(), 
@@ -113,7 +110,7 @@ def main():
             mask_pos = mask_positions.to(device).long(),
             labels = torch.LongTensor([1,0]))
         
-        print(output1)
+        print(output1.tolist())
 
     
     # print("#########DATA ARGS#############")
