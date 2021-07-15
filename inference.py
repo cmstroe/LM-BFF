@@ -98,7 +98,7 @@ def main():
                 tokenized_text[i] = '[MASK]'
                 mask_positions.append(i)
         mask_positions = torch.FloatTensor(mask_positions)
-        mask_positions.resizeresize_(1,len(mask_positions))
+        mask_positions.resize_(1,len(mask_positions))
         print("MASK")
         print(mask_positions)
         
