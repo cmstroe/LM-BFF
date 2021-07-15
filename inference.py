@@ -78,9 +78,10 @@ def main():
     for idx, row in df.iterrows():
         text = row.sentence + "Is a collaboration mentioned in the previous sentence? _"
         inputs = tokenizer(row.sentence)
-        for in_ids in inputs:
+        
+        encoded_sequence = torch.FloatTensor(inputs['input_ids'])
+        for in_ids in encoded_sequence:
 	        in_ids.resize_(1,len(in_ids))
-        encoded_sequence = inputs['input_ids']
         padded_sequences = tokenizer(row.sentence, padding = True)
 
         mask_positions = []
@@ -92,7 +93,7 @@ def main():
                 mask_positions.append(i)
 
         output = model_fn.forward(
-            input_ids = torch.FloatTensor(encoded_sequence), 
+            input_ids = encoded_sequence, 
             attention_mask = torch.FloatTensor(padded_sequences["attention_mask"]),
             mask_pos = torch.FloatTensor(mask_positions),
             labels = ['yes', 'no'])
