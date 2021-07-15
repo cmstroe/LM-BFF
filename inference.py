@@ -78,15 +78,20 @@ def main():
     model_fn.to(device)
 
     for idx, row in df.iterrows():
-        text = row.sentence + "Is a collaboration mentioned in the previous sentence? _"
+        text = row.sentence + "Is a collaboration mentioned in the previous sentence?  _"
         inputs = tokenizer(row.sentence)
         
+        print(inputs)
         encoded_sequence = torch.FloatTensor(inputs['input_ids'])
         encoded_sequence.resize_(1,len(encoded_sequence))
+
+        print(inputs['input_ids'])
         
         padded_sequences = tokenizer(row.sentence, padding = True)
         attention_mask = torch.FloatTensor(padded_sequences["attention_mask"])
         attention_mask.resize_(1,len(attention_mask))
+
+        print(padded_sequences["attention_mask"])
 
         mask_positions = []
         tokenized_text = tokenizer.tokenize(text)
@@ -95,6 +100,8 @@ def main():
             if tokenized_text[i] == '_':
                 tokenized_text[i] = '[MASK]'
                 mask_positions.append(i)
+        
+        print(mask_positions)
 
         output1, output2 = model_fn.forward(
             input_ids = torch.tensor(encoded_sequence).to(device).long(), 
@@ -102,7 +109,7 @@ def main():
             mask_pos = torch.tensor( torch.FloatTensor(mask_positions)).to(device).long(),
             labels = ['yes','no'])
         
-        print(output2.tolist())
+        # print(output2.tolist())
 
     
     # print("#########DATA ARGS#############")
