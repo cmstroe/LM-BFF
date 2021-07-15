@@ -93,7 +93,7 @@ def main():
         mask_positions = []
         tokenized_text = tokenizer.tokenize(text)
 
-        for i in range(len()):
+        for i in range(len(tokenized_text)):
             if '_' in tokenized_text[i]:
                 tokenized_text[i] = '[MASK]'
                 mask_positions.append(i)
