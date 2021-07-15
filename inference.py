@@ -80,6 +80,7 @@ def main():
         inputs = tokenizer(row.sentence)
         
         encoded_sequence = torch.FloatTensor(inputs['input_ids'])
+        encoded_sequence.resize_(1,len(encoded_sequence))
         
         padded_sequences = tokenizer(row.sentence, padding = True)
 
