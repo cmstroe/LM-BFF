@@ -98,7 +98,7 @@ def main():
         output = model_fn.forward(
             input_ids = torch.tensor(encoded_sequence).to(device).long(), 
             attention_mask = torch.tensor(attention_mask).to(device).long(),
-            mask_pos = torch.FloatTensor(mask_positions),
+            mask_pos = torch.tensor( torch.FloatTensor(mask_positions)).to(device).long(),
             labels = ['yes', 'no'])
         
         print(output)
