@@ -79,7 +79,7 @@ def main():
         text = row.sentence + "Is a collaboration mentioned in the previous sentence? _"
         inputs = tokenizer(row.sentence)
         encoded_sequence = inputs['input_ids']
-        padded_sequence = tokenizer(row.sentence, padding = True)
+        padded_sequences = tokenizer(row.sentence, padding = True)
 
         mask_positions = []
         tokenized_text = tokenizer.tokenize(text)
@@ -94,6 +94,8 @@ def main():
             attention_mask = padded_sequences["attention_mask"],
             mask_pos = mask_positions,
             labels = ['yes', 'no'])
+        
+        print(output)
 
     
     # print("#########DATA ARGS#############")
