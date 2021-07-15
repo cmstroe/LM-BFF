@@ -65,7 +65,7 @@ def main():
             config = RobertaConfig.from_json_file("result/partnership-prompt-demo-16-13-roberta-large-27549/config.json") , 
             state_dict = torch.load("result/partnership-prompt-demo-16-13-roberta-large-27549/pytorch_model.bin")
         )
-    
+
     special_tokens = []
     tokenizer = AutoTokenizer.from_pretrained(
             model_args.tokenizer_name if model_args.tokenizer_name else model_args.model_name_or_path,
@@ -75,6 +75,7 @@ def main():
     
     df = pd.read_csv("inference_data.csv")
     device = torch.device('cuda')
+    model_fn.to(device)
 
     for idx, row in df.iterrows():
         text = row.sentence + "Is a collaboration mentioned in the previous sentence? _"
