@@ -99,12 +99,13 @@ def main():
                 mask_positions.append(i)
         mask_positions = torch.FloatTensor(mask_positions)
         mask_positions.resize_(1,len(mask_positions))
+        
         print("MASK")
         print(mask_positions)
         
 
         output1, output2 = model_fn.forward(
-            input_ids = tokenizer.convert_tokens_to_ids(tokenized_text).to(device).long(), 
+            input_ids = torch.FloatTensor(tokenizer.convert_tokens_to_ids(tokenized_text)).to(device).long(), 
             attention_mask = attention_mask.to(device).long(),
             mask_pos = mask_positions.to(device).long(),
             labels = ['yes','no'])
