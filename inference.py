@@ -93,7 +93,7 @@ def main():
         mask_positions = []
         tokenized_text = tokenizer.tokenize(text)
 
-        for i in range(len(tokenized_text)):
+        for i in range(len()):
             if '_' in tokenized_text[i]:
                 tokenized_text[i] = '[MASK]'
                 mask_positions.append(i)
@@ -104,7 +104,7 @@ def main():
         
 
         output1, output2 = model_fn.forward(
-            input_ids = encoded_sequence.to(device).long(), 
+            input_ids = tokenizer.convert_tokens_to_ids(tokenized_text).to(device).long(), 
             attention_mask = attention_mask.to(device).long(),
             mask_pos = mask_positions.to(device).long(),
             labels = ['yes','no'])
