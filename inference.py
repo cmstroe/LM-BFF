@@ -97,7 +97,8 @@ def main():
             if '_' in tokenized_text[i]:
                 tokenized_text[i] = '[MASK]'
                 mask_positions.append(i)
-        
+        mask_positions = torch.FloatTensor(mask_positions)
+        mask_positions.resizeresize_(1,len(mask_positions))
         print("MASK")
         print(mask_positions)
         
@@ -105,7 +106,7 @@ def main():
         output1, output2 = model_fn.forward(
             input_ids = torch.tensor(encoded_sequence).to(device).long(), 
             attention_mask = torch.tensor(attention_mask).to(device).long(),
-            mask_pos = torch.tensor( torch.FloatTensor(mask_positions)).to(device).long(),
+            mask_pos = torch.tensor(mask_positions.to(device).long()),
             labels = ['yes','no'])
         
         print(output2.tolist())
