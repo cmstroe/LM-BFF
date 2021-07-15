@@ -105,7 +105,7 @@ def main():
         mask_positions.resize_(1,len(mask_positions))
         
 
-        logit = model_fn.forward(
+        zeros,logit = model_fn.forward(
             input_ids = encoded_sequence.to(device).long(), 
             attention_mask = attention_mask.to(device).long(),
             mask_pos = mask_positions.to(device).long(),
