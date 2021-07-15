@@ -176,7 +176,7 @@ class RobertaForPromptFinetuning(BertPreTrainedModel):
         if self.config.num_labels == 1:
             logsoftmax = nn.LogSoftmax(-1)
             logits = logsoftmax(logits) # Log prob of right polarity
-
+        return logits
         loss = None
         if labels is not None:
             if self.num_labels == 1:
