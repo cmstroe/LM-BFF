@@ -73,8 +73,6 @@ def main():
             additional_special_tokens=special_tokens,
             cache_dir= ".",
         )
-    print('MASK')
-    print(tokenizer.tokenize(''))
 
     df = pd.read_csv("inference_data.csv")
     device = torch.device('cuda')
@@ -89,7 +87,9 @@ def main():
         encoded_sequence.resize_(1,len(encoded_sequence))
 
         print(inputs['input_ids'])
-        
+        print('MASK')
+        print(tokenizer.tokenize('_'))
+
         padded_sequences = tokenizer(row.sentence, padding = True)
         attention_mask = torch.FloatTensor(padded_sequences["attention_mask"])
         attention_mask.resize_(1,len(attention_mask))
