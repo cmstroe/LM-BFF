@@ -111,7 +111,7 @@ def main():
             input_ids = encoded_sequence.to(device).long(), 
             attention_mask = attention_mask.to(device).long(),
             mask_pos = mask_positions.to(device).long(),
-            labels = ['yes','no'])
+            labels = torch.LongTensor([1,0]))
         
         print(output1)
 
