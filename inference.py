@@ -102,7 +102,7 @@ def main():
             mask_pos = torch.tensor( torch.FloatTensor(mask_positions)).to(device).long(),
             labels = [0,1])
         
-        print(output1.tolist())
+        print(output2.tolist())
 
     
     # print("#########DATA ARGS#############")
