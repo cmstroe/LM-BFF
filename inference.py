@@ -72,73 +72,97 @@ def main():
             additional_special_tokens=special_tokens,
             cache_dir= ".",
         )
-    print("#########DATA ARGS#############")
-    print(data_args)
-    # ipdb.runcall(FewShotDataset, data_args,tokenizer, "train", True, kwargs = 'foo')
-    train_dataset = FewShotDataset(
-        data_args, 
-        tokenizer=tokenizer, 
-        mode="train", 
-        use_demo=True)
-
-    test_dataset = FewShotDataset(
-            data_args, 
-            tokenizer=tokenizer, 
-            mode="test", 
-            use_demo=True
-            )
-
-    print(train_dataset)
-
-    model_fn.forward(
-        input_ids = train_dataset.input_ids,
-        attention_mask = train_dataset.attention_mask,
-        mask_pos = train_dataset.mask_pos,
-        labels = train_dataset.labels
-
-    )
     
-    train_dataset = FewShotDataset(
-        data_args, 
-        tokenizer=tokenizer, 
-        mode="train", 
-        use_demo=True)
+    df = pd.read_csv("inference_data.csv", head = None)
+
+    for row in df.iterrows():
+        text = row.sentence + "Is a collaboration mentioned in the previous sentence? _"
+        inputs = tokenizer(row.sentence)
+        encoded_sequence = inputs['input_ids']
+        padded_sequence = tokenizer(row.sentence, padding = True)
+
+        mask_positions = []
+        tokenized_text = tokenizer.tokenize(text)
+
+        for i in range(len(tokenized_text)):
+            if tokenized_text[i] == '_':
+                tokenized_text[i] = '[MASK]'
+                mask_positions.append(i)
+
+        output = model_fn.forward(
+            input_ids = encoded_sequence , 
+            attention_mask = padded_sequences["attention_mask"],
+            mask_pos = mask_positions,
+            labels = ['yes', 'no'])
+
+    
+    # print("#########DATA ARGS#############")
+    # print(data_args)
+    # # ipdb.runcall(FewShotDataset, data_args,tokenizer, "train", True, kwargs = 'foo')
+    # train_dataset = FewShotDataset(
+    #     data_args, 
+    #     tokenizer=tokenizer, 
+    #     mode="train", 
+    #     use_demo=True)
+
+    # test_dataset = FewShotDataset(
+    #         data_args, 
+    #         tokenizer=tokenizer, 
+    #         mode="test", 
+    #         use_demo=True
+    #         )
+
+    # print(train_dataset)
+
+    # model_fn.forward(
+    #     input_ids = train_dataset.convert_fn().input_ids,
+    #     attention_mask = train_dataset.attention_mask,
+    #     mask_pos = train_dataset.mask_pos,
+    #     labels = train_dataset.labels
+
+    # )
+    
+    # train_dataset = FewShotDataset(
+    #     data_args, 
+    #     tokenizer=tokenizer, 
+    #     mode="train", 
+    #     use_demo=True)
     
 
-    print(train_dataset.label_word_list)
+    # print(train_dataset.label_word_list)
 
-    model_fn.label_word_list = torch.tensor(train_dataset.label_word_list).long().cuda()
+    # model_fn.label_word_list = torch.tensor(train_dataset.label_word_list).long().cuda()
    
 
-    trainer = Trainer(
-            model=model_fn,
-            args=training_args,
-            train_dataset=None,
-            eval_dataset=None,
-        )
+    # trainer = Trainer(
+    #         model=model_fn,
+    #         args=training_args,
+    #         train_dataset=None,
+    #         eval_dataset=None,
+    #     )
 
 
 
     
 
-    print("#############TEST############")
-    print(test_dataset)
+    # print("#############TEST############")
+    # print(test_dataset)
 
-    test_datasets = [test_dataset]
+    # test_datasets = [test_dataset]
        
-    for test_dataset in test_datasets:
-            trainer.compute_metrics = build_compute_metrics_fn(test_dataset.args.task_name)
-            print(trainer.compute_metrics)
-            output = trainer.evaluate(eval_dataset=test_dataset)
-            test_result = output.metrics
+    # for test_dataset in test_datasets:
+    #         trainer.compute_metrics = build_compute_metrics_fn(test_dataset.args.task_name)
+    #         print(trainer.compute_metrics)
+    #         output = trainer.evaluate(eval_dataset=test_dataset)
+    #         test_result = output.metrics
 
-            if trainer.is_world_master():
-                predictions = output.predictions
-                num_logits = predictions.shape[-1]
-                logits = predictions.reshape([test_dataset.num_sample, -1, num_logits]).mean(axis=0)
-                np.save(os.path.join(training_args.save_logit_dir, "{}-{}-{}.npy".format(test_dataset.task_name, training_args.model_id, training_args.array_id)), logits)
+    #         if trainer.is_world_master():
+    #             predictions = output.predictions
+    #             num_logits = predictions.shape[-1]
+    #             logits = predictions.reshape([test_dataset.num_sample, -1, num_logits]).mean(axis=0)
+    #             np.save(os.path.join(training_args.save_logit_dir, "{}-{}-{}.npy".format(test_dataset.task_name, training_args.model_id, training_args.array_id)), logits)
 
-            test_results.update(test_result)
+    #         test_results.update(test_result)
 
   
 if __name__ == "__main__":
