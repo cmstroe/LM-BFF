@@ -73,7 +73,7 @@ def main():
             cache_dir= ".",
         )
     
-    df = pd.read_csv("inference_data.csv", head = None)
+    df = pd.read_csv("inference_data.csv")
 
     for row in df.iterrows():
         text = row.sentence + "Is a collaboration mentioned in the previous sentence? _"
