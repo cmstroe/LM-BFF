@@ -74,6 +74,7 @@ def main():
             cache_dir= ".",
         )
 
+    print(tokenizer.vocab_size)
     df = pd.read_csv("inference_data.csv")
     device = torch.device('cuda')
     model_fn.label_word_list = torch.LongTensor([0,1])
@@ -111,7 +112,7 @@ def main():
             mask_pos = mask_positions.to(device).long(),
             labels = torch.LongTensor([0,1]))
         
-        print(logit.size())
+        # print(logit.size())
 
       
     # print("#########DATA ARGS#############")
