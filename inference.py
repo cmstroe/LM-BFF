@@ -111,9 +111,9 @@ def main():
             mask_pos = mask_positions.to(device).long(),
             labels = torch.LongTensor([0,1]))
         
-        print(logit.tolist())
+        print(logit)
 
-        break
+      
     # print("#########DATA ARGS#############")
     # print(data_args)
     # # ipdb.runcall(FewShotDataset, data_args,tokenizer, "train", True, kwargs = 'foo')
