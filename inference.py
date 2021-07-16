@@ -111,7 +111,7 @@ def main():
             mask_pos = mask_positions.to(device).long(),
             labels = torch.LongTensor([0,1]))
         
-        print(logit)
+        print(logit.size())
 
       
     # print("#########DATA ARGS#############")
