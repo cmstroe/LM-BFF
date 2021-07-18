@@ -112,10 +112,10 @@ def main():
             attention_mask = attention_mask.to(device).long(),
             mask_pos = mask_positions.to(device).long(),
             labels = torch.LongTensor([0,1]))
-        top_k = torch.topk(logits, 3, dim = 1)[1][0]
+        top_k = torch.topk(logit, 3, dim = 1)[1][0]
         try :
             list_token_words = [tokenizer.decode([index]) for index in top_k]
-            list_token_values =  [(logits == index).nonzero(as_tuple=True) for index in top_k]
+            list_token_values =  [(logit == index).nonzero(as_tuple=True) for index in top_k]
 
             df_results = df_results.append({"sentence" : row.sentence ,
                     "token_values" : list_token_values, 
