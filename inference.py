@@ -118,10 +118,10 @@ def main():
         
         print("ARGMAX")
         print(tokenizer.decode([torch.argmax(logit)]))
-        print("TOKP")
-        top_k = torch.topk(logit, 10, dim = 1)[1][0]
-        for index in top_k:
-            print(tokenizer.decode([index]))
+        # print("TOKP")
+        # top_k = torch.topk(logit, 10, dim = 1)[1][0]
+        # for index in top_k:
+        #     print(tokenizer.decode([index]))
 
 
       
