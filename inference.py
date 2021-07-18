@@ -122,6 +122,7 @@ def main():
                     "word" : list_token_words
                     },
                     ignore_index = True)
+            torch.cuda.empty_cache()
         except:
             print("invalid character")
             
