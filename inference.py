@@ -112,15 +112,12 @@ def main():
             attention_mask = attention_mask.to(device).long(),
             mask_pos = mask_positions.to(device).long(),
             labels = torch.LongTensor([0,1]))
-        top_k = torch.topk(logit, 3, dim = 1)[1][0]
+
         try :
-            list_token_words = [tokenizer.decode([index]) for index in top_k]
-            list_token_values =  torch.topk(logit, 3) 
-            print(list_token_values)
-            print(list_token_words)
+
             df_results = df_results.append({"sentence" : row.sentence ,
-                    "token_values" : list_token_values, 
-                    "word" : list_token_words
+                    "token_values" : torch.topk(logit, 1) ,
+                    "word" : tokenizer.decode(torch.argmax(logit))
                     },
                     ignore_index = True)
             torch.cuda.empty_cache()
