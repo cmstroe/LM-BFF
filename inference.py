@@ -86,7 +86,7 @@ def main():
     
     for idx, row in df.iterrows():
         text = row.sentence + "Is a collaboration mentioned in the previous sentence?  _ "
-        inputs = tokenizer(text, ignore)
+        inputs = tokenizer(text)
         
 
         encoded_sequence = torch.FloatTensor(inputs['input_ids'])
