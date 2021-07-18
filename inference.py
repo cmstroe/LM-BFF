@@ -109,9 +109,9 @@ def main():
         
 
         zeros,logit = model_fn.forward(
-            input_ids = encoded_sequence.to('cuda:0').long(), 
-            attention_mask = attention_mask.to('cuda:0').long(),
-            mask_pos = mask_positions.to('cuda:0').long(),
+            input_ids = encoded_sequence.to('cuda:1').long(), 
+            attention_mask = attention_mask.to('cuda:1').long(),
+            mask_pos = mask_positions.to('cuda:1').long(),
             labels = torch.LongTensor([0,1]))
         
         # try :
@@ -121,6 +121,9 @@ def main():
                     "word" : tokenizer.decode([torch.argmax(logit)])
                     },
                     ignore_index = True)
+        del encoded_sequence
+        del attention_mask
+        del mask_positions
         torch.cuda.empty_cache()
         print(idx)
 
