@@ -124,7 +124,7 @@ def main():
         del encoded_sequence
         del attention_mask
         del mask_positions
-        learn.destroy 
+
         torch.cuda.empty_cache()
         print(idx)
 
