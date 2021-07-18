@@ -112,7 +112,7 @@ def main():
             attention_mask = attention_mask.to(device).long(),
             mask_pos = mask_positions.to(device).long(),
             labels = torch.LongTensor([0,1]))
-
+        
         try :
 
             df_results = df_results.append({"sentence" : row.sentence ,
@@ -123,6 +123,8 @@ def main():
             torch.cuda.empty_cache()
         except:
             print("invalid character")
+        
+        torch.cuda.empty_cache()
             
        
     print(df_results.head)
