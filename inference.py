@@ -71,7 +71,7 @@ def main():
     special_tokens = []
     tokenizer = AutoTokenizer.from_pretrained(
             model_args.tokenizer_name if model_args.tokenizer_name else model_args.model_name_or_path,
-            additional_special_tokens=special_tokens,
+            additional_special_tokens=special_tokens, truncation=True,
             cache_dir= ".",
         )
 
