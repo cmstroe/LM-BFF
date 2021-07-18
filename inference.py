@@ -140,7 +140,7 @@ def main():
             
     
     df_results.groupby(['word'])
-    df_results.to_csv("df_partnership.csv", index = Falses)
+    df_results.to_csv("df_partnership.csv", index = False)
 
 
       
