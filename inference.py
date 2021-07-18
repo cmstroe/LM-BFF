@@ -109,9 +109,9 @@ def main():
         
 
         zeros,logit = model_fn.forward(
-            input_ids = encoded_sequence.to(device).long(), 
-            attention_mask = attention_mask.to(device).long(),
-            mask_pos = mask_positions.to(device).long(),
+            input_ids = encoded_sequence.long(), 
+            attention_mask = attention_mask.long(),
+            mask_pos = mask_positions.long(),
             labels = torch.LongTensor([0,1]))
         
         # try :
