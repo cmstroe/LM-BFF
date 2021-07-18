@@ -117,7 +117,7 @@ def main():
         # pd.append({"token" : np.argmax(logit), "word" : np.argmax(logit)},ignore_index = True)
         
         print("ARGMAX")
-        print(tokenizer.decode(torch.argmax(logit)))
+        print(tokenizer.decode([torch.argmax(logit)]))
         print("TOKP")
         top_k = torch.topk(logit, 10, dim = 1)[1][0]
         for index in top_k:
