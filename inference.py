@@ -118,7 +118,7 @@ def main():
         
         print("ARGMAX")
         print(torch.argmax(logit))
-        print(TOKP)
+        print("TOKP")
         print(torch.topk(logits, 10, dim = 1)[1][0])
 
 
