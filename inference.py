@@ -5,6 +5,7 @@ from tools.generate_labels import ModelArguments, DynamicDataTrainingArguments, 
 from transformers import GlueDataTrainingArguments as DataTrainingArguments
 from transformers import RobertaConfig, AutoConfig, AutoModelForSequenceClassification, AutoTokenizer, EvalPrediction
 from transformers import HfArgumentParser, TrainingArguments
+from transformers import EncoderDecoderModel
 import dataclasses
 import logging
 import os
@@ -15,7 +16,7 @@ from typing import Callable, Dict, Optional
 import torch
 
 import numpy as np
-
+import pandas as pd
 
 from src.dataset import FewShotDataset
 from src.models import BertForPromptFinetuning, RobertaForPromptFinetuning, resize_token_type_embeddings
@@ -82,7 +83,7 @@ def main():
     model_fn.model_args = model_args
     model_fn.return_full_softmax = True
     model_fn.to(device)
-
+    
     for idx, row in df.iterrows():
         text = row.sentence + "Is a collaboration mentioned in the previous sentence?  _ "
         inputs = tokenizer(text)
@@ -111,8 +112,15 @@ def main():
             attention_mask = attention_mask.to(device).long(),
             mask_pos = mask_positions.to(device).long(),
             labels = torch.LongTensor([0,1]))
+        # top_10 = torch.topk(logits, 10, dim = 1)[1][0]
+
+        # pd.append({"token" : np.argmax(logit), "word" : np.argmax(logit)},ignore_index = True)
         
-        # print(logit.size())
+        print("ARGMAX")
+        print(np.argmax(logits))
+        print(TOKP)
+        print(torch.topk(logits, 10, dim = 1)[1][0])
+
 
       
     # print("#########DATA ARGS#############")
