@@ -115,7 +115,7 @@ def main():
         top_k = torch.topk(logit, 3, dim = 1)[1][0]
         try :
             list_token_words = [tokenizer.decode([index]) for index in top_k]
-            list_token_values =  [(logit == index).nonzero(as_tuple=True) for index in top_k]
+            list_token_values =  torch.topk(logit, 3) 
             print(list_token_values)
             print(list_token_words)
             df_results = df_results.append({"sentence" : row.sentence ,
