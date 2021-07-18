@@ -107,8 +107,8 @@ def main():
         mask_positions = torch.FloatTensor(mask_positions)
         mask_positions.resize_(1,len(mask_positions))
         
-
-        zeros,logit = model_fn.forward(
+        with torch.no_grad():
+            zeros,logit = model_fn.forward(
             input_ids = encoded_sequence.to('cuda:1').long(), 
             attention_mask = attention_mask.to('cuda:1').long(),
             mask_pos = mask_positions.to('cuda:1').long(),
@@ -124,6 +124,7 @@ def main():
         del encoded_sequence
         del attention_mask
         del mask_positions
+        learn.destroy 
         torch.cuda.empty_cache()
         print(idx)
 
