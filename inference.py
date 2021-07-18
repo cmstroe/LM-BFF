@@ -113,7 +113,7 @@ def main():
             mask_pos = mask_positions.to(device).long(),
             labels = torch.LongTensor([0,1]))
         
-        try :
+        # try :
 
             df_results = df_results.append({"sentence" : row.sentence ,
                     "token_values" : torch.topk(logit, 1) ,
@@ -121,8 +121,8 @@ def main():
                     },
                     ignore_index = True)
             torch.cuda.empty_cache()
-        except:
-            print("invalid character")
+        # except:
+        #     print("invalid character")
         
         torch.cuda.empty_cache()
             
