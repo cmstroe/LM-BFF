@@ -86,7 +86,7 @@ def main():
     
     for idx, row in df.iterrows():
         text = row.sentence + "Is a collaboration mentioned in the previous sentence?  _ "
-        inputs = tokenizer(text)
+        inputs = tokenizer(text, ignore)
         
 
         encoded_sequence = torch.FloatTensor(inputs['input_ids'])
@@ -117,7 +117,7 @@ def main():
         # pd.append({"token" : np.argmax(logit), "word" : np.argmax(logit)},ignore_index = True)
         
         print("ARGMAX")
-        print(tokenizer.decode([torch.argmax(logit)]))
+        print(tokenizer.decode([torch.argmax(logit)], skip_special_tokens = True))
         # print("TOKP")
         # top_k = torch.topk(logit, 10, dim = 1)[1][0]
         # for index in top_k:
