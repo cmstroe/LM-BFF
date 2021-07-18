@@ -75,7 +75,7 @@ def main():
             cache_dir= ".",
         )
 
-    print(tokenizer.vocab_size)
+
     df = pd.read_csv("inference_data.csv")
     device = torch.device('cuda')
     model_fn.label_word_list = torch.LongTensor([0,1])
@@ -83,7 +83,7 @@ def main():
     model_fn.model_args = model_args
     model_fn.return_full_softmax = True
     model_fn.to(device)
-    
+    df_results = pd.DataFrame(columns = ['sentence', "token_values" , "word"])
     for idx, row in df.iterrows():
         text = row.sentence + "Is a collaboration mentioned in the previous sentence?  _ "
         inputs = tokenizer(text)
@@ -112,17 +112,21 @@ def main():
             attention_mask = attention_mask.to(device).long(),
             mask_pos = mask_positions.to(device).long(),
             labels = torch.LongTensor([0,1]))
-        # top_10 = torch.topk(logits, 10, dim = 1)[1][0]
+        top_k = torch.topk(logits, 3, dim = 1)[1][0]
+        try :
+            list_token_words = [tokenizer.decode([index]) for index in top_k]
+            list_token_values =  [(logits == index).nonzero(as_tuple=True) for index in top_k]
 
-        # pd.append({"token" : np.argmax(logit), "word" : np.argmax(logit)},ignore_index = True)
-        
-        print("ARGMAX")
-        print(tokenizer.decode([torch.argmax(logit)], skip_special_tokens = True))
-        # print("TOKP")
-        # top_k = torch.topk(logit, 10, dim = 1)[1][0]
-        # for index in top_k:
-        #     print(tokenizer.decode([index]))
-
+            df_results = df_results.append({"sentence" : row.sentence ,
+                    "token_values" : list_token_values, 
+                    "word" : list_token_words
+                    },
+                    ignore_index = True)
+        except:
+            print("invalid character")
+            
+       
+    print(df_results.head)
 
       
     # print("#########DATA ARGS#############")
