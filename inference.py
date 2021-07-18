@@ -138,11 +138,10 @@ def main():
         
         torch.cuda.empty_cache()
             
-       
-    print(df_results.head)
+    
+    df_results.groupby(['word'])
     df_results.to_csv("df_partnership.csv", index = Falses)
 
-    df_results.groupby(['word'])
 
       
     # print("#########DATA ARGS#############")
