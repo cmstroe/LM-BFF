@@ -117,7 +117,7 @@ def main():
         # pd.append({"token" : np.argmax(logit), "word" : np.argmax(logit)},ignore_index = True)
         
         print("ARGMAX")
-        print(np.argmax(logit))
+        print(torch.argmax(logit))
         print(TOKP)
         print(torch.topk(logits, 10, dim = 1)[1][0])
 
