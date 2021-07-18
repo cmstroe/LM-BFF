@@ -116,7 +116,8 @@ def main():
         try :
             list_token_words = [tokenizer.decode([index]) for index in top_k]
             list_token_values =  [(logit == index).nonzero(as_tuple=True) for index in top_k]
-
+            print(list_token_values)
+            print(list_token_words)
             df_results = df_results.append({"sentence" : row.sentence ,
                     "token_values" : list_token_values, 
                     "word" : list_token_words
