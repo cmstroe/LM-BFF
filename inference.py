@@ -115,12 +115,12 @@ def main():
         
         # try :
 
-            df_results = df_results.append({"sentence" : row.sentence ,
+        df_results = df_results.append({"sentence" : row.sentence ,
                     "token_values" : torch.topk(logit, 1) ,
                     "word" : tokenizer.decode(torch.argmax(logit))
                     },
                     ignore_index = True)
-            torch.cuda.empty_cache()
+        torch.cuda.empty_cache()
         # except:
         #     print("invalid character")
         
