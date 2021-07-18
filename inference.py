@@ -118,7 +118,7 @@ def main():
 
         df_results = df_results.append({"sentence" : row.sentence ,
                     "token_values" : torch.topk(logit, 1) ,
-                    "word" : tokenizer.decode([torch.argmax(logit)])
+                    "word" : tokenizer.decode([torch.argmax(logit)]) if torch.argmax(logit) else "nothing", 
                     },
                     ignore_index = True)
         del encoded_sequence
@@ -135,6 +135,9 @@ def main():
             
        
     print(df_results.head)
+    df_results.to_csv("df_partnership.csv", index = Falses)
+
+    df_results.groupby(['word'])
 
       
     # print("#########DATA ARGS#############")
