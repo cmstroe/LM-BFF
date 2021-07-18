@@ -85,7 +85,6 @@ def main():
     model_fn.to(device)
     df_results = pd.DataFrame(columns = ['sentence', "token_values" , "word"])
 
-    i=0
     for idx, row in df.iterrows():
         text = row.sentence + "Is a collaboration mentioned in the previous sentence?  _ "
         inputs = tokenizer(text)
@@ -123,8 +122,8 @@ def main():
                     },
                     ignore_index = True)
         torch.cuda.empty_cache()
-        print(i)
-        i+=1
+        print(idx)
+
         # except:
         #     print("invalid character")
         
