@@ -87,6 +87,8 @@ def main():
 
     for idx, row in df.iterrows():
         text = row.sentence + "Is a collaboration mentioned in the previous sentence?  _ "
+        if len(text) > 512:
+            text = text[:512]
         inputs = tokenizer(text)
         
 
