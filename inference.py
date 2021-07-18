@@ -121,7 +121,7 @@ def main():
         print("TOKP")
         top_k = torch.topk(logit, 10, dim = 1)[1][0]
         for index in top_k:
-            print(tokenize.decode([index]))
+            print(tokenizer.decode([index]))
 
 
       
