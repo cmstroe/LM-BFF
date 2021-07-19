@@ -1,19 +1,3 @@
-########## The following part is copied from Transformers' trainer (3.4.0) ########## 
-
-# coding=utf-8
-# Copyright 2020-present the HuggingFace Inc. team.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
 """
 The Trainer class, to easily train a 🤗 Transformers from scratch or finetune it on a new task.
 """
@@ -228,7 +212,6 @@ class Trainer(transformers.Trainer):
     def train(self, model_path=None, dev_objective=None):
         """
         Main training entry point.
-
         The training logic is directly borrowed from transformers.Trainer (version 3.0.2).
         Add early stopping.
         """
@@ -442,18 +425,14 @@ class Trainer(transformers.Trainer):
     def evaluate(self, eval_dataset: Optional[Dataset] = None) -> Dict[str, float]:
         """
         Run evaluation and returns metrics.
-
         The calling script will be responsible for providing a method to compute metrics, as they are
         task-dependent (pass it to the init :obj:`compute_metrics` argument).
-
         You can also subclass and override this method to inject custom behavior.
-
         Args:
             eval_dataset (:obj:`Dataset`, `optional`):
                 Pass a dataset if you wish to override :obj:`self.eval_dataset`. If it is an :obj:`datasets.Dataset`,
                 columns not accepted by the ``model.forward()`` method are automatically removed. It must implement
                 the :obj:`__len__` method.
-
         Returns:
             A dictionary containing the evaluation loss and the potential metrics computed from the predictions.
         """
