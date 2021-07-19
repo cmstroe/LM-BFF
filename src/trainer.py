@@ -353,7 +353,7 @@ class Trainer(transformers.Trainer):
                 if steps_trained_in_current_epoch > 0:
                     steps_trained_in_current_epoch -= 1
                     continue
-                tr.loss = tr_loss.requres_grad = True
+                tr_loss = tr_loss.requres_grad = True
                 tr_loss += self.training_step(model, inputs)
 
                 if (step + 1) % self.args.gradient_accumulation_steps == 0 or (
