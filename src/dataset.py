@@ -96,7 +96,6 @@ def tokenize_multipart_input(
             *+sentl_i*: same as above, but add a space before the sentence and use lower case for the first word
             *label_i*: label_word_list[i]
             *label_x*: label depends on the example id (support_labels needed). this is only used in GPT-3's in-context learning
-
         Use "_" to replace space.
         PAY ATTENTION TO SPACE!! DO NOT leave space before variables, for this will lead to extra space token.
         """
@@ -439,32 +438,32 @@ class FewShotDataset(torch.utils.data.Dataset):
                 self.example_idx.append((query_idx, context_indices, sample_idx))
 
         # If it is not training, we pre-process the data; otherwise, we process the data online.
-            if mode != "train":
-                self.features = []
-                _ = 0
-                for query_idx, context_indices, bootstrap_idx in self.example_idx:
-                    # The input (query) example
-                    example = self.query_examples[query_idx]
-                    # The demonstrations
-                    supports = self.select_context([self.support_examples[i] for i in context_indices])
+        if mode != "train":
+            self.features = []
+            _ = 0
+            for query_idx, context_indices, bootstrap_idx in self.example_idx:
+                # The input (query) example
+                example = self.query_examples[query_idx]
+                # The demonstrations
+                supports = self.select_context([self.support_examples[i] for i in context_indices])
 
-                    if args.template_list is not None:
-                        template = args.template_list[sample_idx % len(args.template_list)] # Use template in order
-                    else:
-                        template = args.template
+                if args.template_list is not None:
+                    template = args.template_list[sample_idx % len(args.template_list)] # Use template in order
+                else:
+                    template = args.template
 
-                    self.features.append(self.convert_fn(
-                        example=example,
-                        supports=supports,
-                        use_demo=self.use_demo,
-                        label_list=self.label_list,
-                        prompt=args.prompt,
-                        template=template,
-                        label_word_list=self.label_word_list,
-                        verbose=True if _ == 0 else False,
-                    ))
+                self.features.append(self.convert_fn(
+                    example=example,
+                    supports=supports,
+                    use_demo=self.use_demo,
+                    label_list=self.label_list,
+                    prompt=args.prompt,
+                    template=template,
+                    label_word_list=self.label_word_list,
+                    verbose=True if _ == 0 else False,
+                ))
 
-                    _ += 1
+                _ += 1
         else:
             self.features = None
 
@@ -512,7 +511,6 @@ class FewShotDataset(torch.utils.data.Dataset):
             # The input (query) example
             example = self.query_examples[query_idx]
             # The demonstrations
-            sample_idx = i
             supports = self.select_context([self.support_examples[i] for i in context_indices])
 
             if self.args.template_list is not None:
@@ -654,6 +652,5 @@ class FewShotDataset(torch.utils.data.Dataset):
             logger.info("text: %s" % self.tokenizer.decode(features.input_ids))
 
         return features
-
 
 
