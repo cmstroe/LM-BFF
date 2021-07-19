@@ -374,6 +374,7 @@ class Trainer(transformers.Trainer):
                         self.scaler.step(optimizer)
                         self.scaler.update()
                     else:
+                        torch.cuda.empty_cache()
                         optimizer.step()
 
                     scheduler.step()
