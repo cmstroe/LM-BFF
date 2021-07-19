@@ -161,10 +161,10 @@ class RobertaForPromptFinetuning(BertPreTrainedModel):
         prediction_mask_scores = self.lm_head(sequence_mask_output)
 
         # Exit early and only return mask logits.
-        # if self.return_full_softmax:
-        if labels is not None:
+        if self.return_full_softmax:
+            if labels is not None:
                 return torch.zeros(1, out=prediction_mask_scores.new()), prediction_mask_scores
-        return prediction_mask_scores
+            return prediction_mask_scores
 
         # Return logits for each label
         logits = []
@@ -176,7 +176,7 @@ class RobertaForPromptFinetuning(BertPreTrainedModel):
         if self.config.num_labels == 1:
             logsoftmax = nn.LogSoftmax(-1)
             logits = logsoftmax(logits) # Log prob of right polarity
-        return logits
+
         loss = None
         if labels is not None:
             if self.num_labels == 1:
