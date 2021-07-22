@@ -41,12 +41,13 @@ def main():
             num_logits = predictions.shape[-1]
             logits = predictions.reshape([eval_dataset.num_sample, -1, num_logits])
             logits = logits.mean(axis=0)
-
+            import ipdb
+            ipdb.set_trace()
             if num_logits == 1:
                 preds = np.squeeze(logits)
             else:
-                import ipdb
-                ipdb.set_trace()
+                
+                
                 preds = np.argmax(logits, axis=1)
 
             # Just for sanity, assert label ids are the same.
