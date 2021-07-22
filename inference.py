@@ -119,8 +119,10 @@ def main():
             labels = torch.LongTensor([0,1]))
 
 
-            for i, x in enumerate(logit.cpu().numpy()):
-                print(x)
+            for i, x in enumerate(logit):
+                word = tokenizer.decode(x)
+                if word == " no":
+                    print(i)
         try :
 
             df_results = df_results.append({"sentence" : row.sentence ,
