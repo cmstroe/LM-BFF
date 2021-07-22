@@ -79,7 +79,7 @@ def main():
 
 
     df = pd.read_csv("inference_data.csv")
-    device = torch.device('cuda:1')
+    device = torch.device('cuda:0')
     model_fn.label_word_list = torch.LongTensor([0,1])
     model_fn.data_args = data_args
     model_fn.model_args = model_args
@@ -113,9 +113,9 @@ def main():
         
         with torch.no_grad():
             zeros,logit = model_fn.forward(
-            input_ids = encoded_sequence.to('cuda:1').long(), 
-            attention_mask = attention_mask.to('cuda:1').long(),
-            mask_pos = mask_positions.to('cuda:1').long(),
+            input_ids = encoded_sequence.to('cuda:0').long(), 
+            attention_mask = attention_mask.to('cuda:0').long(),
+            mask_pos = mask_positions.to('cuda:0').long(),
             labels = torch.LongTensor([0,1]))
         
         try :
