@@ -123,11 +123,11 @@ def main():
 
             df_results = df_results.append({"sentence" : row.sentence ,
                     "token_values" : torch.topk(logit, 1) ,
-                    "word" : tokenizer.decode([torch.argmax(logit)]) if torch.argmax(logit) else "nothing",
+                    "word" : tokenizer.decode([torch.argmax(logit)]) if torch.argmax(logit) else "nothing", ignore_index = True)
                     # "yes_value" :  ,  
                     # "no_value" :   ,
                     # },
-                    ignore_index = True)
+                    
         except:
             print("error")
 
