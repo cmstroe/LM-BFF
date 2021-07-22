@@ -64,8 +64,8 @@ def main():
             additional_special_tokens=special_tokens, truncation=True,
             cache_dir= ".",
         )
-    df = pd.read_csv("inference_data.csv")
-    device = torch.device('cuda:1')
+    df = pd.read_csv("inference_data_1.csv")
+    device = torch.device('cuda:0')
     model_fn.label_word_list = torch.LongTensor([0,1])
     model_fn.data_args = data_args
     model_fn.model_args = model_args
