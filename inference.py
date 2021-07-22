@@ -117,16 +117,15 @@ def main():
             attention_mask = attention_mask.to('cuda:0').long(),
             mask_pos = mask_positions.to('cuda:0').long(),
             labels = torch.LongTensor([0,1]))
-            import ipdb
-            ipdb.set_trace()
+            print(logit.shape)
         
         try :
 
             df_results = df_results.append({"sentence" : row.sentence ,
                     "token_values" : torch.topk(logit, 1) ,
                     "word" : tokenizer.decode([torch.argmax(logit)]) if torch.argmax(logit) else "nothing"
-                    # "yes_value" :  ,  
-                    # "no_value" :   ,
+                    "yes_value" :  ,  
+                    "no_value" :   ,
                     },
                     ignore_index = True)
         except:
