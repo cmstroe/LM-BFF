@@ -117,8 +117,10 @@ def main():
             attention_mask = attention_mask.to('cuda:0').long(),
             mask_pos = mask_positions.to('cuda:0').long(),
             labels = torch.LongTensor([0,1]))
-            print(logit.shape)
-        
+
+
+            for i, x in enumerate(logits.numpy()):
+                print(x)
         try :
 
             df_results = df_results.append({"sentence" : row.sentence ,
