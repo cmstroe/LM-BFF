@@ -18,8 +18,7 @@ from transformers import HfArgumentParser, TrainingArguments, set_seed
 from src.dataset import FewShotDataset
 from src.models import BertForPromptFinetuning, RobertaForPromptFinetuning, resize_token_type_embeddings
 from src.trainer import Trainer
-from src.funding_task_preprocessor import processors_mapping, num_labels_mapping, output_modes_mapping, compute_metrics_mapping
-from src.processors import bound_mapping
+from src.processors import processors_mapping, num_labels_mapping, output_modes_mapping, compute_metrics_mapping, bound_mapping
 
 from filelock import FileLock
 from datetime import datetime
@@ -130,7 +129,7 @@ class DynamicDataTrainingArguments(DataTrainingArguments):
     )
 
     top_n_template: int = field(
-        default=5,
+        default=None,
         metadata={"help": "Use top-n template in the template path"}
     )
 
@@ -457,10 +456,6 @@ def main():
     train_dataset = (
         FewShotDataset(data_args, tokenizer=tokenizer, mode="train", use_demo=("demo" in model_args.few_shot_type))
     )
-
-    print("###############HERE####################")
-    print(train_dataset.label_word_list)
-
     eval_dataset = (
         FewShotDataset(data_args, tokenizer=tokenizer, mode="dev", use_demo=("demo" in model_args.few_shot_type))
         if training_args.do_eval
