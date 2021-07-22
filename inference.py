@@ -119,7 +119,7 @@ def main():
             labels = torch.LongTensor([0,1]))
 
 
-            for i, x in enumerate(logits.numpy()):
+            for i, x in enumerate(logit.numpy()):
                 print(x)
         try :
 
