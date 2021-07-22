@@ -64,8 +64,8 @@ def main():
     model_fn = RobertaForPromptFinetuning
     model_fn = model_fn.from_pretrained(
             pretrained_model_name_or_path = 'roberta-large', 
-            config = RobertaConfig.from_json_file("results_finance/config.json") , 
-            state_dict = torch.load("results_finance/pytorch_model.bin")
+            config = RobertaConfig.from_json_file("results_funding_150/config.json") , 
+            state_dict = torch.load("results_funding_150/pytorch_model.bin")
         )
 
     special_tokens = []
@@ -140,7 +140,7 @@ def main():
             
     
     df_results.groupby(['word'])
-    df_results.to_csv("df_finance.csv", index = False)
+    df_results.to_csv("df_funding.csv", index = False)
 
 
       
