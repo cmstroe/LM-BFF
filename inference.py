@@ -64,8 +64,8 @@ def main():
     model_fn = RobertaForPromptFinetuning
     model_fn = model_fn.from_pretrained(
             pretrained_model_name_or_path = 'roberta-large', 
-            config = RobertaConfig.from_json_file("result/partnership-prompt-demo-16-13-roberta-large-27549/config.json") , 
-            state_dict = torch.load("result/partnership-prompt-demo-16-13-roberta-large-27549/pytorch_model.bin")
+            config = RobertaConfig.from_json_file("results_finance/config.json") , 
+            state_dict = torch.load("results_finance/pytorch_model.bin")
         )
 
     special_tokens = []
