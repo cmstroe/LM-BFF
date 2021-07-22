@@ -2,7 +2,7 @@
 import pandas as pd
 
 
-df = pd.read_csv("df_partnership.csv")
+df = pd.read_csv("df_funding.csv")
 
 df_pos = df.loc[df.word == " Yes"]
 
