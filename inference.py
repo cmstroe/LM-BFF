@@ -41,8 +41,7 @@ def main():
             num_logits = predictions.shape[-1]
             logits = predictions.reshape([eval_dataset.num_sample, -1, num_logits])
             logits = logits.mean(axis=0)
-            import ipdb
-            ipdb.set_trace()
+            
             if num_logits == 1:
                 preds = np.squeeze(logits)
             else:
@@ -79,7 +78,7 @@ def main():
         )
 
 
-    df = pd.read_csv("inference_data.csv")
+    df = pd.read_csv("inference_data_1.csv")
     device = torch.device('cuda:0')
     model_fn.label_word_list = torch.LongTensor([0,1])
     model_fn.data_args = data_args
@@ -118,12 +117,16 @@ def main():
             attention_mask = attention_mask.to('cuda:0').long(),
             mask_pos = mask_positions.to('cuda:0').long(),
             labels = torch.LongTensor([0,1]))
+            import ipdb
+            ipdb.set_trace()
         
         try :
 
             df_results = df_results.append({"sentence" : row.sentence ,
                     "token_values" : torch.topk(logit, 1) ,
-                    "word" : tokenizer.decode([torch.argmax(logit)]) if torch.argmax(logit) else "nothing", 
+                    "word" : tokenizer.decode([torch.argmax(logit)]) if torch.argmax(logit) else "nothing"
+                    # "yes_value" :  ,  
+                    # "no_value" :   ,
                     },
                     ignore_index = True)
         except:
