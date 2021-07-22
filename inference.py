@@ -86,7 +86,7 @@ def main():
     df_results = pd.DataFrame(columns = ['sentence', "token_values" , "word"])
 
     for idx, row in df.iterrows():
-        text = row.sentence + "Is a investment mentioned in the previous sentence?  _ "
+        text = row.sentence + "Is a funding round mentioned in the previous sentence?  _ "
         if len(text) > 512:
             text = text[:512]
         inputs = tokenizer(text)
