@@ -14,7 +14,7 @@ import pandas as pd
 from dataclasses import dataclass, field
 from typing import Callable, Dict, Optional
 import torch
-
+import ipdb
 import numpy as np
 import pandas as pd
 
@@ -45,6 +45,7 @@ def main():
             if num_logits == 1:
                 preds = np.squeeze(logits)
             else:
+                ipdb.set_trace()
                 preds = np.argmax(logits, axis=1)
 
             # Just for sanity, assert label ids are the same.
