@@ -122,7 +122,6 @@ def main():
         try :
             if torch.argmax(logit):
                 print("NEW")
-                print(torch.argmax(logit)) 
                 print(tokenizer.decode([torch.argmax(logit)]))
             df_results = df_results.append({"sentence" : row.sentence ,
                     "token_values" : torch.topk(logit, 1) ,
