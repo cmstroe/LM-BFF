@@ -14,7 +14,6 @@ import pandas as pd
 from dataclasses import dataclass, field
 from typing import Callable, Dict, Optional
 import torch
-import ipdb
 
 import numpy as np
 import pandas as pd
@@ -42,7 +41,7 @@ def main():
             num_logits = predictions.shape[-1]
             logits = predictions.reshape([eval_dataset.num_sample, -1, num_logits])
             logits = logits.mean(axis=0)
-            ipdb.set_trace()
+
             if num_logits == 1:
                 preds = np.squeeze(logits)
             else:
