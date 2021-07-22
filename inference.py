@@ -86,7 +86,7 @@ def main():
     df_results = pd.DataFrame(columns = ['sentence', "token_values" , "word"])
 
     for idx, row in df.iterrows():
-        text = row.sentence + "Is a collaboration mentioned in the previous sentence?  _ "
+        text = row.sentence + "Is a investment mentioned in the previous sentence?  _ "
         if len(text) > 512:
             text = text[:512]
         inputs = tokenizer(text)
@@ -140,7 +140,7 @@ def main():
             
     
     df_results.groupby(['word'])
-    df_results.to_csv("df_partnership.csv", index = False)
+    df_results.to_csv("df_finance.csv", index = False)
 
 
       
